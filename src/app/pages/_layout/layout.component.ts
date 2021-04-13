@@ -38,9 +38,9 @@ export class LayoutComponent implements OnInit, AfterViewInit {
   extrasUserOffcanvasDisplay = false;
   extrasQuickPanelDisplay = false;
   extrasScrollTopDisplay = false;
-  @ViewChild('ktAside', { static: true }) ktAside: ElementRef;
-  @ViewChild('ktHeaderMobile', { static: true }) ktHeaderMobile: ElementRef;
-  @ViewChild('ktHeader', { static: true }) ktHeader: ElementRef;
+  @ViewChild('ktAside', {static: true}) ktAside: ElementRef;
+  @ViewChild('ktHeaderMobile', {static: true}) ktHeaderMobile: ElementRef;
+  @ViewChild('ktHeader', {static: true}) ktHeader: ElementRef;
 
   constructor(
     private initService: LayoutInitService,
@@ -111,7 +111,7 @@ export class LayoutComponent implements OnInit, AfterViewInit {
         if (this.asideHTMLAttributes.hasOwnProperty(key)) {
           this.ktAside.nativeElement.attributes[key] = this.asideHTMLAttributes[
             key
-          ];
+            ];
         }
       }
     }
@@ -121,7 +121,7 @@ export class LayoutComponent implements OnInit, AfterViewInit {
         if (this.headerMobileAttributes.hasOwnProperty(key)) {
           this.ktHeaderMobile.nativeElement.attributes[
             key
-          ] = this.headerMobileAttributes[key];
+            ] = this.headerMobileAttributes[key];
         }
       }
     }
@@ -131,7 +131,7 @@ export class LayoutComponent implements OnInit, AfterViewInit {
         if (this.headerHTMLAttributes.hasOwnProperty(key)) {
           this.ktHeader.nativeElement.attributes[
             key
-          ] = this.headerHTMLAttributes[key];
+            ] = this.headerHTMLAttributes[key];
         }
       }
     }

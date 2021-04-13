@@ -13,7 +13,7 @@ export const locale = {
       FEATURES: 'Features',
       APPS: 'Apps',
       DASHBOARD: 'Dashboard',
-      TASK: 'Task List',
+      TASK: 'Công Việc',
     },
     AUTH: {
       GENERAL: {

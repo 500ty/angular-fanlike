@@ -10,15 +10,6 @@ export const DynamicAsideMenuConfig = {
       bullet: 'dot',
     },
     {
-      title: 'Task List',
-      root: true,
-      icon: 'flaticon2-architecture-and-city',
-      svg: './assets/media/svg/icons/Design/Layers.svg',
-      page: '/task',
-      translate: 'MENU.TASK',
-      bullet: 'dot',
-    },
-    {
       title: 'Layout Builder',
       root: true,
       icon: 'flaticon2-expand',
