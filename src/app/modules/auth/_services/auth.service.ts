@@ -6,6 +6,7 @@ import { AuthModel } from '../_models/auth.model';
 import { AuthHTTPService } from './auth-http';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
+import { ApiService } from '@core/services/api.service';
 
 @Injectable({
   providedIn: 'root',
@@ -27,12 +28,14 @@ export class AuthService implements OnDestroy {
   }
 
   set currentUserValue(user: UserModel) {
+    console.log('currentUserValue:', user);
     this.currentUserSubject.next(user);
   }
 
   constructor(
     private authHttpService: AuthHTTPService,
-    private router: Router
+    private router: Router,
+    private apiService: ApiService
   ) {
     this.isLoadingSubject = new BehaviorSubject<boolean>(false);
     this.currentUserSubject = new BehaviorSubject<UserModel>(undefined);
@@ -133,5 +136,21 @@ export class AuthService implements OnDestroy {
 
   ngOnDestroy() {
     this.unsubscribe.forEach((sb) => sb.unsubscribe());
+  }
+
+  fbLogin(credentials: any) {
+    return this.apiService.post(`/social/fbme`, credentials).pipe(
+      map((res: any) => res.data),
+      map((user: UserModel) => {
+        if (user) {
+          this.currentUserSubject = new BehaviorSubject<UserModel>(user);
+          this.setAuthFromLocalStorage(user);
+        } else {
+          this.logout();
+        }
+        return user;
+      }),
+      finalize(() => this.isLoadingSubject.next(false))
+    );
   }
 }

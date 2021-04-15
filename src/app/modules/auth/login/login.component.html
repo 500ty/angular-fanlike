@@ -26,14 +26,14 @@
     <!--end::Title-->
 
     <!-- begin::Alert info-->
-    <ng-container *ngIf="!hasError">
+    <!--{<ng-container *ngIf="!hasError">
       <div class="mb-10 alert alert-custom alert-light-info alert-dismissible">
         <div class="alert-text">
           Use account <strong>{{ defaultAuth.email }}</strong> and password
           <strong>{{ defaultAuth.password }}</strong> to continue.
         </div>
       </div>
-    </ng-container>
+    </ng-container>}-->
     <!-- end::Alert info-->
 
     <!-- begin::Alert error-->
@@ -156,11 +156,12 @@
       <button
         type="button"
         class="btn btn-light-primary font-weight-bolder px-8 py-4 my-3 font-size-lg"
+        (click)="signInWithFB()"
       >
         <span class="svg-icon svg-icon-md">
-          <img src="./assets/media/svg/social-icons/google.svg" />
+          <img height="20" src="./assets/media/svg/social-icons/facebook.svg" />
         </span>
-        Sign in with Google
+        Sign in with Facebook
       </button>
 
       <ng-container *ngIf="isLoading$ | async">

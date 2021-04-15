@@ -1255,6 +1255,11 @@
     semver "7.3.2"
     semver-intersect "1.4.0"
 
+"@types/facebook-js-sdk@^3.3.2":
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/@types/facebook-js-sdk/-/facebook-js-sdk-3.3.2.tgz#4e34c7bf758a1ac848baef1dc3fc03e9b67553a6"
+  integrity sha512-s4L1r0lhdSz7Q138pnXU6/0escJCisKAgaIMOPiAOS32OxrdOkRTPXJShEd08jwmrvD3KCpj+kboWiH343n3vg==
+
 "@types/glob@^7.1.1":
   version "7.1.3"
   resolved "https://registry.yarnpkg.com/@types/glob/-/glob-7.1.3.tgz#e6ba80f36b7daad2c685acd9266382e68985c183"
@@ -1586,6 +1591,13 @@ angular-in-memory-web-api@^0.11.0:
   version "0.11.0"
   resolved "https://registry.yarnpkg.com/angular-in-memory-web-api/-/angular-in-memory-web-api-0.11.0.tgz#46e4ad896b36d669f36801fc8cafa7db8278d078"
   integrity sha512-QV1qYHm+Zd+wrvlcPLnAcqqGpOmCN1EUj4rRuYHpek8+QqFFdxBNuPZOJCKvU7I97z5QSKHsdc6PNKlpUQr3UA==
+
+angularx-social-login@^3.5.5:
+  version "3.5.5"
+  resolved "https://registry.yarnpkg.com/angularx-social-login/-/angularx-social-login-3.5.5.tgz#a770eeb8c010f77664f93272ec9da1ad7629a36a"
+  integrity sha512-J8PxtNjdpfAoMhICjX14nUUv31srnzJqJ7Lf54owrLX8jd4lACvQ5GjuuDVPQjFGd88oT+ehH4gtiWgR+tyiIA==
+  dependencies:
+    tslib "^2.0.0"
 
 ansi-colors@4.1.1:
   version "4.1.1"

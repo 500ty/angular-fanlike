@@ -5,6 +5,9 @@ import { first } from 'rxjs/operators';
 import { UserModel } from '../_models/user.model';
 import { AuthService } from '../_services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FacebookLoginProvider, SocialAuthService } from 'angularx-social-login';
+import { HttpClient } from '@angular/common/http';
+import { ApiService } from '@core/services/api.service';
 
 @Component({
   selector: 'app-login',
@@ -33,7 +36,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private authService: AuthService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private socialAuthService: SocialAuthService,
+    private http: HttpClient,
+    private apiService: ApiService,
   ) {
     this.isLoading$ = this.authService.isLoading$;
     // redirect to home if already logged in
@@ -46,8 +52,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.initForm();
     // get return url from route parameters or default to '/'
     this.returnUrl =
-        this.route.snapshot.queryParams['returnUrl'.toString()] || '/';
-    }
+      this.route.snapshot.queryParams['returnUrl'.toString()] || '/';
+  }
 
   // convenience getter for easy access to form fields
   get f() {
@@ -83,7 +89,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       .pipe(first())
       .subscribe((user: UserModel) => {
         if (user) {
-          this.router.navigate([this.  returnUrl]);
+          this.router.navigate([this.returnUrl]);
         } else {
           this.hasError = true;
         }
@@ -93,5 +99,19 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.unsubscribe.forEach((sb) => sb.unsubscribe());
+  }
+
+  async signInWithFB(): Promise<void> {
+    const res = await this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID);
+    console.log(res);
+    if (res) {
+      const userRes = await this.authService.fbLogin(res).toPromise();
+      console.log('userRes:', userRes);
+      if (userRes) {
+        this.router.navigate([this.returnUrl]);
+      } else {
+        this.hasError = true;
+      }
+    }
   }
 }
