@@ -18,6 +18,9 @@ import {TaxInformationComponent} from './tax-information/tax-information.compone
 import {StatementsComponent} from './statements/statements.component';
 import {UserProfileRoutingModule} from './user-profile-routing.module';
 import {ProfileCardComponent} from './_components/profile-card/profile-card.component';
+import { SharedAppModule } from '@shared/shared.module';
+import { ClipboardModule } from '@angular/cdk/clipboard';
+import { CoreModule } from '../../_metronic/core';
 
 @NgModule({
   declarations: [
@@ -43,7 +46,10 @@ import {ProfileCardComponent} from './_components/profile-card/profile-card.comp
     DropdownMenusModule,
     NgbDropdownModule,
     NgbTooltipModule,
-    WidgetsModule
+    WidgetsModule,
+    SharedAppModule,
+    ClipboardModule,
+    CoreModule
   ]
 })
 export class UserProfileModule {}

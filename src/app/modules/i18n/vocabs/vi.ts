@@ -1,18 +1,18 @@
-// USA
+// Vietnam
 export const locale = {
-  lang: 'en',
+  lang: 'vi',
   data: {
     TRANSLATOR: {
-      SELECT: 'Select your language',
+      SELECT: 'Chọn ngôn ngữ',
     },
     MENU: {
-      NEW: 'new',
+      NEW: 'mới',
       ACTIONS: 'Actions',
-      CREATE_POST: 'Create New Post',
-      PAGES: 'Pages',
-      FEATURES: 'Features',
+      CREATE_POST: 'Tạo bài viết',
+      PAGES: 'Trang',
+      FEATURES: 'Tính năng',
       APPS: 'Apps',
-      DASHBOARD: 'Dashboard',
+      DASHBOARD: 'Tổng quan',
       TASK: 'Công Việc',
     },
     AUTH: {

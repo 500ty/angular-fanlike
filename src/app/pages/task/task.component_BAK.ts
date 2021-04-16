@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-task',
-  templateUrl: './task.component.html',
+  templateUrl: './task.component_BAK.html',
   styleUrls: ['./task.component.scss']
 })
 export class TaskComponent implements OnInit {

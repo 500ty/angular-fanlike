@@ -1,13 +1,11 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subscription, Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { UserModel } from '../_models/user.model';
 import { AuthService } from '../_services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FacebookLoginProvider, SocialAuthService } from 'angularx-social-login';
-import { HttpClient } from '@angular/common/http';
-import { ApiService } from '@core/services/api.service';
 
 @Component({
   selector: 'app-login',
@@ -38,13 +36,11 @@ export class LoginComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private socialAuthService: SocialAuthService,
-    private http: HttpClient,
-    private apiService: ApiService,
   ) {
     this.isLoading$ = this.authService.isLoading$;
     // redirect to home if already logged in
     if (this.authService.currentUserValue) {
-      this.router.navigate(['/']);
+      this.router.navigate(['/']).then();
     }
   }
 
@@ -84,17 +80,17 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   submit() {
     this.hasError = false;
-    const loginSubscr = this.authService
+    const loginSub = this.authService
       .login(this.f.email.value, this.f.password.value)
       .pipe(first())
       .subscribe((user: UserModel) => {
         if (user) {
-          this.router.navigate([this.returnUrl]);
+          this.router.navigate([this.returnUrl]).then();
         } else {
           this.hasError = true;
         }
       });
-    this.unsubscribe.push(loginSubscr);
+    this.unsubscribe.push(loginSub);
   }
 
   ngOnDestroy() {
@@ -108,7 +104,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       const userRes = await this.authService.fbLogin(res).toPromise();
       console.log('userRes:', userRes);
       if (userRes) {
-        this.router.navigate([this.returnUrl]);
+        await this.router.navigate([this.returnUrl]);
       } else {
         this.hasError = true;
       }

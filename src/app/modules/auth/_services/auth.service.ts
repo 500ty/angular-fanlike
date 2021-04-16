@@ -77,6 +77,7 @@ export class AuthService implements OnDestroy {
 
     this.isLoadingSubject.next(true);
     return this.authHttpService.getUserByToken(auth.authToken).pipe(
+      map((res: any) => res.data),
       map((user: UserModel) => {
         if (user) {
           this.currentUserSubject = new BehaviorSubject<UserModel>(user);
@@ -112,17 +113,7 @@ export class AuthService implements OnDestroy {
       .pipe(finalize(() => this.isLoadingSubject.next(false)));
   }
 
-  // private methods
-  private setAuthFromLocalStorage(auth: AuthModel): boolean {
-    // store auth authToken/refreshToken/epiresIn in local storage to keep user logged in between page refreshes
-    if (auth && auth.authToken) {
-      localStorage.setItem(this.authLocalStorageToken, JSON.stringify(auth));
-      return true;
-    }
-    return false;
-  }
-
-  private getAuthFromLocalStorage(): AuthModel {
+  getAuthFromLocalStorage(): AuthModel {
     try {
       const authData = JSON.parse(
         localStorage.getItem(this.authLocalStorageToken)
@@ -132,6 +123,16 @@ export class AuthService implements OnDestroy {
       console.error(error);
       return undefined;
     }
+  }
+
+  // private methods
+  private setAuthFromLocalStorage(auth: AuthModel): boolean {
+    // store auth authToken/refreshToken/epiresIn in local storage to keep user logged in between page refreshes
+    if (auth && auth.authToken) {
+      localStorage.setItem(this.authLocalStorageToken, JSON.stringify(auth));
+      return true;
+    }
+    return false;
   }
 
   ngOnDestroy() {

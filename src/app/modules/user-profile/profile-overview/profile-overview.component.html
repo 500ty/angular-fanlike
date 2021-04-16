@@ -1,13 +1,65 @@
-<div class="row">
-  <div class="col-lg-6">
-    <app-lists-widget14 cssClass="card-stretch gutter-b"></app-lists-widget14>
-  </div>
-  <div class="col-lg-6">
-    <app-lists-widget10 cssClass="card-stretch gutter-b"></app-lists-widget10>
-  </div>
-  <div class="col-lg-12">
-    <app-advance-tables-widget7
-      cssClass="card-stretch gutter-b"
-    ></app-advance-tables-widget7>
-  </div>
+<div class="card">
+    <div class="card-header">Profile Overview</div>
+    <div class="card-body pt-8" *ngIf="user$ | async as _user">
+        {{ _user | json }}
+        <div class="d-flex align-items-center mb-10">
+            <div class="symbol symbol-40 symbol-light-primary mr-5">
+          <span class="symbol-label">
+              <span class="svg-icon svg-icon-lg svg-icon-primary d-flex align-items-center">
+                  <i class="fab fa-facebook-f"></i>
+              </span>
+          </span>
+            </div>
+            <div class="d-flex flex-column font-weight-bold">
+                <a class="text-dark text-hover-primary mb-1 font-size-lg cursor-pointer">Facebook Profile</a>
+                <a href="https://www.facebook.com/johntran112" target="_blank" class="text-muted">
+                    https://www.facebook.com/johntran112
+                </a>
+            </div>
+        </div>
+        <div class="d-flex align-items-center mb-10">
+            <div class="symbol symbol-40 symbol-light-primary mr-5">
+          <span class="symbol-label">
+              <span class="svg-icon svg-icon-lg svg-icon-primary d-flex align-items-center">
+                  <i class="fab fa-facebook-f"></i>
+              </span>
+          </span>
+            </div>
+            <div class="d-flex flex-column font-weight-bold">
+                <a class="text-dark text-hover-primary mb-1 font-size-lg cursor-pointer">Facebook ID</a>
+                <span class="text-muted">
+                    3986706474684886
+                </span>
+            </div>
+        </div>
+        <div class="d-flex align-items-center mb-10">
+            <div class="symbol symbol-40 symbol-light-primary mr-5">
+          <span class="symbol-label">
+              <span class="svg-icon svg-icon-lg svg-icon-primary d-flex align-items-center">
+                  <i class="fas fa-link"></i>
+              </span>
+          </span>
+            </div>
+            <div class="d-flex flex-column font-weight-bold">
+                <a class="text-dark text-hover-primary mb-1 font-size-lg cursor-pointer">Refer-A-Friend Program</a>
+                <a href="#" class="text-muted" cdkCopyToClipboard="{{ env.domain.app }}/?rid=4275249"
+                   ngbTooltip="Copied!" triggers="click:blur">
+                    {{ env.domain.app }}/?rid={{_user.hash_id}}
+                </a>
+            </div>
+        </div>
+        <div class="d-flex align-items-center mb-10">
+            <div class="symbol symbol-40 symbol-light-primary mr-5">
+          <span class="symbol-label">
+              <span class="svg-icon svg-icon-lg svg-icon-primary d-flex align-items-center">
+                  <i class="fab fa-facebook-f"></i>
+              </span>
+          </span>
+            </div>
+            <div class="d-flex flex-column font-weight-bold">
+                <a class="text-dark text-hover-primary mb-1 font-size-lg cursor-pointer">Invited You</a>
+                <span class="text-muted">admin@fanlike.net</span>
+            </div>
+        </div>
+    </div>
 </div>

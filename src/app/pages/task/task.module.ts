@@ -6,7 +6,7 @@ import { TaskComponent } from './task.component';
 import { CRUDTableModule } from '../../_metronic/shared/crud-table';
 import { ReactiveFormsModule } from '@angular/forms';
 import { InlineSVGModule } from 'ng-inline-svg';
-
+import { ShareModule } from 'ngx-sharebuttons';
 
 @NgModule({
   declarations: [TaskComponent],
@@ -15,7 +15,8 @@ import { InlineSVGModule } from 'ng-inline-svg';
     TaskRoutingModule,
     CRUDTableModule,
     ReactiveFormsModule,
-    InlineSVGModule
+    InlineSVGModule,
+    ShareModule
   ]
 })
 export class TaskModule { }
