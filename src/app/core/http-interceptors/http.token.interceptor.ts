@@ -19,9 +19,9 @@ export class HttpTokenInterceptor implements HttpInterceptor {
     const authData = JSON.parse(
       localStorage.getItem(this.authLocalStorageToken)
     );
-    const token = authData.authToken;
 
-    if (token) {
+    if (authData) {
+      const token = authData.authToken;
       // headersConfig['Authorization'] = `Token ${token}`;
       headersConfig.Authorization = `Bearer ${token}`;
     }

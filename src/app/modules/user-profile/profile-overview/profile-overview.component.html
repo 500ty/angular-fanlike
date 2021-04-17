@@ -1,7 +1,6 @@
 <div class="card">
     <div class="card-header">Profile Overview</div>
     <div class="card-body pt-8" *ngIf="user$ | async as _user">
-        {{ _user | json }}
         <div class="d-flex align-items-center mb-10">
             <div class="symbol symbol-40 symbol-light-primary mr-5">
           <span class="symbol-label">
