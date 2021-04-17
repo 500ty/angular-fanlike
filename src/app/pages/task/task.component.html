@@ -89,10 +89,13 @@
                             <th>
                                 Title
                             </th>
-                            <th>
+                            <th [style.width.px]="100">
+                                Status
+                            </th>
+                            <th [style.width.px]="100">
                                 Created
                             </th>
-                            <th>
+                            <th [style.width.px]="120">
                                 Actions
                             </th>
                             </thead>
@@ -102,6 +105,18 @@
                                     <a class="cursor-pointer" shareButton="facebook" [url]="task.link + '?utm_source=FanLike&utm_medium=' + user.hash_id">
                                         {{ task.title }}
                                     </a>
+                                </td>
+                                <td>
+                                    <span
+                                        class="label label-lg label-inline"
+                                        [class.label-light-primary]="task.status === 0"
+                                        [class.label-light-success]="task.status === 1"
+                                        [class.label-mute]="task.status === 2"
+                                    >
+                                    <ng-container *ngIf="task.status === 0">Open</ng-container>
+                                    <ng-container *ngIf="task.status === 1">Shared</ng-container>
+                                    <ng-container *ngIf="task.status === 2">Closed</ng-container>
+                                  </span>
                                 </td>
                                 <td>{{ task.created_at | date: 'dd/MM/yyyy' }}</td>
                                 <td>

@@ -113,7 +113,7 @@ export const DefaultLayoutConfig = {
   subheader: {
     display: true,
     displayDesc: true,
-    displayDaterangepicker: true,
+    displayDaterangepicker: false,
     layoutVersion: 'v1', // [1..6]
     fixed: true,
     width: 'fluid', // fixed|fluid,
@@ -169,7 +169,7 @@ export const DefaultLayoutConfig = {
 
   // Footer
   footer: {
-    display: true,
+    display: false,
     width: 'fluid',
     fixed: true,
   },
