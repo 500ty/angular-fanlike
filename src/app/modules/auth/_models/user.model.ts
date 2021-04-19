@@ -20,7 +20,9 @@ export class UserModel extends AuthModel {
   socialNetworks?: SocialNetworksModel;
   // personal information
   firstname: string;
+  first_name: string;
   lastname: string;
+  last_name: string;
   website: string;
   // account information
   language: string;

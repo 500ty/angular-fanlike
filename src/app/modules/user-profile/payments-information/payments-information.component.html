@@ -1,0 +1,199 @@
+<ng-container *ngIf="user">
+  <div class="card card-custom card-stretch">
+    <!-- begin::Loading -->
+    <ng-container *ngIf="isLoading$ | async">
+      <div class="progress progress-modal">
+        <div
+            class="progress-bar progress-bar-striped progress-bar-animated bg-primary"
+            role="progressbar"
+            style="width: 100%"
+            aria-valuenow="100"
+            aria-valuemin="0"
+            aria-valuemax="100"
+        ></div>
+      </div>
+    </ng-container>
+    <!-- end::Loading -->
+    <!--begin::Header-->
+    <div class="card-header py-3">
+      <div class="card-title align-items-start flex-column">
+        <h3 class="card-label font-weight-bolder text-dark">Payment Information</h3>
+        <span class="text-muted font-weight-bold font-size-sm mt-1">Update your payment information</span>
+      </div>
+    </div>
+    <!--end::Header-->
+    <!--begin::Form-->
+    <div class="form">
+      <!--begin::Body-->
+      <div class="card-body">
+        <form [formGroup]="form" novalidate (ngSubmit)="onSubmit()"
+              [ngClass]="{'ng-was-validated-invalid': submitted}">
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Default Payment Method</label>
+            <div class="col-sm-6">
+              <div class="d-flex align-items-center h-100">
+                <mat-radio-group formControlName="type">
+                  <mat-radio-button class="d-block mt-2 mr-0" value="paypal">Paypal</mat-radio-button>
+                  <mat-radio-button class="d-block mt-2 mr-0" value="bank">Bank Wire Transfer</mat-radio-button>
+                  <mat-radio-button class="d-block mt-2 mr-0" value="payoneer">Payoneer</mat-radio-button>
+                </mat-radio-group>
+              </div>
+            </div>
+          </div>
+        </form>
+        <hr>
+        <div class="d-none" [ngClass]="{'d-block': form.value.type === 'paypal'}">
+          <form [formGroup]="formPayPal" novalidate (ngSubmit)="onSubmit()"
+                [ngClass]="{'ng-was-validated-invalid': submitted}">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Minimum payment amounts</label>
+              <div class="col-sm-6 form-inline">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">$20</span>
+                  </div>
+                  <!--          <p-spinner size="10" formControlName="paypal_minimum_payment" [min]="25"></p-spinner>-->
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Name on the Account (<span class="text-danger">*</span>)</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" formControlName="paypal_account_name">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Paypal Email (<span class="text-danger">*</span>)</label>
+              <div class="col-sm-6">
+                <input type="email" class="form-control" formControlName="paypal_email">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label"></label>
+              <div class="col-sm-6">
+                <button [disabled]="form.invalid || formPayPal.invalid || submitted" class="btn btn-primary btn-elevate"
+                        type="submit">
+                  Save
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="d-none" [ngClass]="{'d-block': form.value.type === 'bank'}">
+          <form [formGroup]="formBank" novalidate (ngSubmit)="onSubmit()"
+                [ngClass]="{'ng-was-validated-invalid': submitted}">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Minimum payment amounts</label>
+              <div class="col-sm-6 form-inline">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">$20</span>
+                  </div>
+                  <!--          <p-spinner size="10" formControlName="bank_minimum_payment" [min]="100"></p-spinner>-->
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Bank Name (<span class="text-danger">*</span>)</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" formControlName="bank_name">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Bank Address</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" formControlName="bank_address">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Name on the Account (<span class="text-danger">*</span>)</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" formControlName="bank_account_name">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Account Number (<span class="text-danger">*</span>)</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" formControlName="bank_account_number">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">IBAN #</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" formControlName="bank_iban">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Routing Number #</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" formControlName="bank_routing_number">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Swift Code # (<span class="text-danger">*</span>)</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" formControlName="bank_swift_code">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Phone Number</label>
+              <div class="col-sm-6">
+                <input type="tel" class="form-control" formControlName="bank_phone_number">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label"></label>
+              <div class="col-sm-6">
+                <button [disabled]="form.invalid || formBank.invalid || submitted" class="btn btn-primary btn-elevate"
+                        type="submit">
+                  Save
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="d-none" [ngClass]="{'d-block': form.value.type === 'payoneer'}">
+          <form [formGroup]="formPayoneer" novalidate (ngSubmit)="onSubmit()"
+                [ngClass]="{'ng-was-validated-invalid': submitted}">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Minimum payment amounts</label>
+              <div class="col-sm-6 form-inline">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">$20</span>
+                  </div>
+                  <!--          <p-spinner size="10" formControlName="payoneer_minimum_payment" [min]="25"></p-spinner>-->
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Name on the Account (<span class="text-danger">*</span>)</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" formControlName="payoneer_account_name">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Payoneer Email (<span class="text-danger">*</span>)</label>
+              <div class="col-sm-6">
+                <input type="email" class="form-control" formControlName="payoneer_email">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label"></label>
+              <div class="col-sm-6">
+                <button [disabled]="form.invalid || formPayoneer.invalid || submitted" class="btn btn-primary btn-elevate"
+                        type="submit">
+                  Save
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!--end::Body-->
+    </div>
+    <!--end::Form-->
+  </div>
+</ng-container>
+
+

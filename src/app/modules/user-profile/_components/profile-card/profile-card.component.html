@@ -1,123 +1,128 @@
 <!--begin::Profile Card-->
 <div class="card card-custom card-stretch" *ngIf="user$ | async as user">
-    <!--begin::Body-->
-    <div class="card-body pt-4">
-        <!--begin::User-->
-        <div class="d-flex align-items-center mb-5">
-            <div class="symbol symbol-60 symbol-xxl-100 mr-5 align-self-start align-self-xxl-center">
-                <div *ngIf="user.avatar" class="symbol-label" [style.backgroundImage]="'url('+ user.avatar +')'"></div>
-                <div *ngIf="!user.avatar" class="symbol-label">{{user.fullname | firstLetter}}</div>
-                <i class="symbol-badge bg-success"></i>
-            </div>
-            <div>
+  <!--begin::Body-->
+  <div class="card-body pt-4">
+    <!--begin::User-->
+    <div class="d-flex align-items-center mb-5">
+      <div class="symbol symbol-60 symbol-xxl-100 mr-5 align-self-start align-self-xxl-center">
+        <div *ngIf="user.avatar" class="symbol-label" [style.backgroundImage]="'url('+ user.avatar +')'"></div>
+        <div *ngIf="!user.avatar" class="symbol-label">{{user.fullname | firstLetter}}</div>
+        <i class="symbol-badge bg-success"></i>
+      </div>
+      <div>
                 <span class="font-weight-bolder font-size-h5 text-dark-75">
                     {{user.fullname }}
                 </span>
-                <div class="text-success">
-                    Verified <i class="fas fa-check-circle text-success"></i>
-                </div>
-                <div class="d-flex align-items-center">
-                    <span class="d-inline-block mb-0 mr-2 font-weight-bolder font-size-h5 text-dark-75">3000</span><img width="18" src="./assets/media/svg/customs/coin.svg" alt="">
-                </div>
-            </div>
+        <div class="text-success">
+          Verified <i class="fas fa-check-circle text-success"></i>
         </div>
-        <!--end::User-->
-
-        <!--begin::Nav-->
-        <div class="navi navi-bold navi-hover navi-active navi-link-rounded">
-            <div class="navi-item mb-2">
-                <a class="navi-link py-4" routerLink="/user-profile/profile-overview" routerLinkActive="active">
+        <div class="d-flex align-items-center">
+          <span class="d-inline-block mb-0 mr-2 font-weight-bolder font-size-h5 text-dark-75">3000</span>
+          <img width="18" src="./assets/media/svg/customs/coin.svg" alt="">
+        </div>
+      </div>
+    </div>
+    <!--end::User-->
+    
+    <!--begin::Nav-->
+    <div class="navi navi-bold navi-hover navi-active navi-link-rounded">
+      <div class="navi-item mb-2">
+        <a class="navi-link py-4" routerLink="/user-profile/profile-overview" routerLinkActive="active">
           <span class="navi-icon mr-2">
             <span [inlineSVG]="'./assets/media/svg/icons/Design/Layers.svg'" cacheSVG="true" class="svg-icon"></span>
           </span>
-                    <span class="navi-text font-size-lg">
+          <span class="navi-text font-size-lg">
             Profile Overview
           </span>
-                </a>
-            </div>
-            <div class="navi-item mb-2">
-                <a class="navi-link py-4" routerLink="/user-profile/personal-information" routerLinkActive="active">
+        </a>
+      </div>
+      <div class="navi-item mb-2">
+        <a class="navi-link py-4" routerLink="/user-profile/personal-information" routerLinkActive="active">
           <span class="navi-icon mr-2">
             <span [inlineSVG]="'./assets/media/svg/icons/General/User.svg'" cacheSVG="true" class="svg-icon"></span>
           </span>
-                    <span class="navi-text font-size-lg">
+          <span class="navi-text font-size-lg">
             Personal Information
           </span>
-                </a>
-            </div>
-            <div class="navi-item mb-2">
-                <a class="navi-link py-4" routerLink="/user-profile/account-information" routerLinkActive="active">
+        </a>
+      </div>
+      <!--<div class="navi-item mb-2">
+          <a class="navi-link py-4" routerLink="/user-profile/account-information" routerLinkActive="active">
+    <span class="navi-icon mr-2">
+      <span [inlineSVG]="'./assets/media/svg/icons/Code/Compiling.svg'" cacheSVG="true" class="svg-icon"></span>
+    </span>
+              <span class="navi-text font-size-lg">
+      Account Information
+    </span>
+          </a>
+      </div>-->
+      <div class="navi-item mb-2">
+        <a class="navi-link py-4" routerLink="/user-profile/change-password" routerLinkActive="active">
           <span class="navi-icon mr-2">
-            <span [inlineSVG]="'./assets/media/svg/icons/Code/Compiling.svg'" cacheSVG="true" class="svg-icon"></span>
-          </span>
-                    <span class="navi-text font-size-lg">
-            Account Information
-          </span>
-                </a>
-            </div>
-            <div class="navi-item mb-2">
-                <a class="navi-link py-4" routerLink="/user-profile/change-password" routerLinkActive="active">
+                    <span [inlineSVG]="'./assets/media/svg/icons/Communication/Shield-user.svg'" cacheSVG="true"
+                          class="svg-icon"></span></span>
+          <span class="navi-text font-size-lg">Change Password</span>
+        </a>
+      </div>
+      <div class="navi-item mb-2">
+        <a class="navi-link py-4" routerLink="/user-profile/payment-information" routerLinkActive="active">
           <span class="navi-icon mr-2">
-            <span [inlineSVG]="'./assets/media/svg/icons/Communication/Shield-user.svg'" cacheSVG="true"
-                  class="svg-icon"></span>
+              <span [inlineSVG]="'./assets/media/svg/icons/Shopping/Wallet.svg'"
+                    cacheSVG="true" class="svg-icon">
+              </span>
           </span>
-                    <span class="navi-text font-size-lg">
-            Change Password
-          </span>
-                    <span class="navi-label">
-            <span class="label label-light-danger label-rounded font-weight-bold">5</span>
-          </span>
-                </a>
-            </div>
-            <div class="navi-item mb-2">
-                <a class="navi-link py-4" routerLink="/user-profile/email-settings" routerLinkActive="active">
-          <span class="navi-icon mr-2">
-            <span [inlineSVG]="'./assets/media/svg/icons/Communication/Mail-opened.svg'" cacheSVG="true"
-                  class="svg-icon"></span>
-          </span>
-                    <span class="navi-text font-size-lg">
-            Email settings
-          </span>
-                </a>
-            </div>
-            <div class="navi-item mb-2">
-                <a class="navi-link py-4 cursor-pointer" ngbTooltip="Coming soon..." triggers="manual" #t="ngbTooltip"
-                   (click)="t.open()" placement="right">
-          <span class="navi-icon mr-2">
-            <span [inlineSVG]="'./assets/media/svg/icons/Layout/Layout-top-panel-6.svg'" cacheSVG="true"
-                  class="svg-icon"></span>
-          </span>
-                    <span class="navi-text font-size-lg">
-            Saved Credit Cards
-          </span>
-                </a>
-            </div>
-            <div class="navi-item mb-2">
-                <a class="navi-link py-4 cursor-pointer" ngbTooltip="Coming soon..." triggers="manual" #t2="ngbTooltip"
-                   (click)="t2.open()" placement="right">
-          <span class="navi-icon mr-2">
-            <span [inlineSVG]="'./assets/media/svg/icons/Files/File.svg'" cacheSVG="true" class="svg-icon"></span>
-          </span>
-                    <span class="navi-text font-size-lg">Tax information</span>
-                    <span class="navi-label">
-            <span class="label label-light-primary label-inline font-weight-bold">new</span>
-          </span>
-                </a>
-            </div>
-            <div class="navi-item mb-2">
-                <a class="navi-link py-4 cursor-pointer" ngbTooltip="Coming soon..." triggers="manual" #t3="ngbTooltip"
-                   (click)="t3.open()" placement="right">
-          <span class="navi-icon mr-2">
-            <span [inlineSVG]="'./assets/media/svg/icons/Text/Article.svg'" cacheSVG="true" class="svg-icon"></span>
-          </span>
-                    <span class="navi-text">
-            Statements
-          </span>
-                </a>
-            </div>
-        </div>
-        <!--end::Nav-->
+          <span class="navi-text font-size-lg">Payment Information</span>
+        </a>
+      </div>
+      <!--<div class="navi-item mb-2">
+          <a class="navi-link py-4" routerLink="/user-profile/email-settings" routerLinkActive="active">
+    <span class="navi-icon mr-2">
+      <span [inlineSVG]="'./assets/media/svg/icons/Communication/Mail-opened.svg'" cacheSVG="true"
+            class="svg-icon"></span>
+    </span>
+              <span class="navi-text font-size-lg">
+      Email settings
+    </span>
+          </a>
+      </div>
+      <div class="navi-item mb-2">
+          <a class="navi-link py-4 cursor-pointer" ngbTooltip="Coming soon..." triggers="manual" #t="ngbTooltip"
+             (click)="t.open()" placement="right">
+    <span class="navi-icon mr-2">
+      <span [inlineSVG]="'./assets/media/svg/icons/Layout/Layout-top-panel-6.svg'" cacheSVG="true"
+            class="svg-icon"></span>
+    </span>
+              <span class="navi-text font-size-lg">
+      Saved Credit Cards
+    </span>
+          </a>
+      </div>
+      <div class="navi-item mb-2">
+          <a class="navi-link py-4 cursor-pointer" ngbTooltip="Coming soon..." triggers="manual" #t2="ngbTooltip"
+             (click)="t2.open()" placement="right">
+    <span class="navi-icon mr-2">
+      <span [inlineSVG]="'./assets/media/svg/icons/Files/File.svg'" cacheSVG="true" class="svg-icon"></span>
+    </span>
+              <span class="navi-text font-size-lg">Tax information</span>
+              <span class="navi-label">
+      <span class="label label-light-primary label-inline font-weight-bold">new</span>
+    </span>
+          </a>
+      </div>
+      <div class="navi-item mb-2">
+          <a class="navi-link py-4 cursor-pointer" ngbTooltip="Coming soon..." triggers="manual" #t3="ngbTooltip"
+             (click)="t3.open()" placement="right">
+    <span class="navi-icon mr-2">
+      <span [inlineSVG]="'./assets/media/svg/icons/Text/Article.svg'" cacheSVG="true" class="svg-icon"></span>
+    </span>
+              <span class="navi-text">
+      Statements
+    </span>
+          </a>
+      </div>-->
     </div>
-    <!--end::Body-->
+    <!--end::Nav-->
+  </div>
+  <!--end::Body-->
 </div>
 <!--end::Profile Card-->

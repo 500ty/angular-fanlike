@@ -6,6 +6,7 @@ import { UserModel } from '../_models/user.model';
 import { AuthService } from '../_services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FacebookLoginProvider, SocialAuthService } from 'angularx-social-login';
+import { environment } from '@env/environment';
 
 @Component({
   selector: 'app-login',
@@ -13,14 +14,16 @@ import { FacebookLoginProvider, SocialAuthService } from 'angularx-social-login'
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit, OnDestroy {
+  appName = environment.appName;
+
   // KeenThemes mock, change it to:
   // defaultAuth = {
   //   email: '',
   //   password: '',
   // };
   defaultAuth: any = {
-    email: 'admin@demo.com',
-    password: 'demo',
+    email: '',
+    password: '',
   };
   loginForm: FormGroup;
   hasError: boolean;

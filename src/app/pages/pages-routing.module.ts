@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from './_layout/layout.component';
 
 const routes: Routes = [
@@ -16,6 +16,11 @@ const routes: Routes = [
         path: 'task',
         loadChildren: () =>
           import('./task/task.module').then((m) => m.TaskModule),
+      },
+      {
+        path: 'payment',
+        loadChildren: () =>
+          import('../modules/payment/payment.module').then((m) => m.PaymentModule),
       },
       {
         path: 'builder',
@@ -81,4 +86,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class PagesRoutingModule { }
+export class PagesRoutingModule {
+}

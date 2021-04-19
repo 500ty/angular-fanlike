@@ -1,0 +1,27 @@
+<ng-container *ngIf="user">
+  <div class="card card-custom">
+    <!-- begin::Loading -->
+    <ng-container *ngIf="isLoading$ | async">
+      <div class="progress progress-modal">
+        <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar"
+             style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+    </ng-container>
+    <!-- end::Loading -->
+    <!--begin::Header-->
+    <div class="card-header py-3">
+      <div class="card-title align-items-start flex-column">
+        <h3 class="card-label font-weight-bolder text-dark">Payment Information</h3>
+        <span class="text-muted font-weight-bold font-size-sm mt-1">Change your account settings</span>
+      </div>
+    </div>
+    <!--end::Header-->
+    <!--begin::Form-->
+    <div class="form">
+      <div class="card-body">
+      
+      </div>
+    </div>
+    <!--end::Form-->
+  </div>
+</ng-container>

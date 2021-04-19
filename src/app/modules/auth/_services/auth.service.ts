@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { Observable, BehaviorSubject, of, Subscription } from 'rxjs';
-import { map, catchError, switchMap, finalize } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of, Subscription } from 'rxjs';
+import { catchError, finalize, map, switchMap } from 'rxjs/operators';
 import { UserModel } from '../_models/user.model';
 import { AuthModel } from '../_models/auth.model';
 import { AuthHTTPService } from './auth-http';
@@ -153,5 +153,25 @@ export class AuthService implements OnDestroy {
       }),
       finalize(() => this.isLoadingSubject.next(false))
     );
+  }
+
+  updateProfile(body: UserModel) {
+    return this.apiService.post('/users/profile', body);
+  }
+
+  paymentGet() {
+    return this.apiService.get('/payment-infos');
+  }
+
+  paymentUpdate(body: any) {
+    return this.apiService.post('/payment-infos', body);
+  }
+
+  payoutsFetch() {
+    return this.apiService.get(('/payments'));
+  }
+
+  payoutsRequest() {
+    return this.apiService.post(('/payments'));
   }
 }

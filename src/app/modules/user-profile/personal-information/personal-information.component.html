@@ -18,11 +18,7 @@
     <div class="card-header py-3">
       <div class="card-title align-items-start flex-column">
         <h3 class="card-label font-weight-bolder text-dark">Personal Information</h3>
-        <span class="text-muted font-weight-bold font-size-sm mt-1">Update your personal informaiton</span>
-      </div>
-      <div class="card-toolbar">
-        <button type="submit" [disabled]="formGroup.invalid" class="btn btn-success mr-2" (click)="save()">Save Changes</button>
-        <button type="reset" class="btn btn-secondary" (click)="cancel()">Cancel</button>
+        <span class="text-muted font-weight-bold font-size-sm mt-1">Update your personal information</span>
       </div>
     </div>
     <!--end::Header-->
@@ -36,7 +32,7 @@
             <h5 class="font-weight-bold mb-6">Customer Info</h5>
           </div>
         </div>
-        <div class="form-group row">
+        <!--<div class="form-group row">
           <label class="col-xl-3 col-lg-3 col-form-label">Avatar</label>
           <div class="col-lg-9 col-xl-6">
             <div class="image-input image-input-outline"
@@ -68,15 +64,15 @@
             </div>
             <span class="form-text text-muted">Allowed file types: png, jpg, jpeg.</span>
           </div>
-        </div>
+        </div>-->
         <div class="form-group row">
           <label class="col-xl-3 col-lg-3 col-form-label">First Name</label>
           <div class="col-lg-9 col-xl-6">
             <input class="form-control form-control-lg form-control-solid"
               type="text"
-              formControlName="firstname"
-              [class.is-invalid]="isControlInvalid('firstname')"
-              [class.is-valid]="isControlValid('firstname')"
+              formControlName="first_name"
+              [class.is-invalid]="isControlInvalid('first_name')"
+              [class.is-valid]="isControlValid('first_name')"
             />
           </div>
         </div>
@@ -86,13 +82,13 @@
             <input class="form-control form-control-lg form-control-solid"
               type="text"
               value="Bold"
-              formControlName="lastname"
-              [class.is-invalid]="isControlInvalid('lastname')"
-              [class.is-valid]="isControlValid('lastname')"
+              formControlName="last_name"
+              [class.is-invalid]="isControlInvalid('last_name')"
+              [class.is-valid]="isControlValid('last_name')"
             />
           </div>
         </div>
-        <div class="form-group row">
+        <!--<div class="form-group row">
           <label class="col-xl-3 col-lg-3 col-form-label">Company Name</label>
           <div class="col-lg-9 col-xl-6">
             <input class="form-control form-control-lg form-control-solid"
@@ -104,7 +100,7 @@
             <span class="form-text text-muted">If you want your invoices addressed to a company. Leave blank to use your
               full name.</span>
           </div>
-        </div>
+        </div>-->
         <div class="row">
           <label class="col-xl-3"></label>
           <div class="col-lg-9 col-xl-6">
@@ -150,7 +146,7 @@
             </div>
           </div>
         </div>
-        <div class="form-group row">
+        <!--<div class="form-group row">
           <label class="col-xl-3 col-lg-3 col-form-label">Company Site</label>
           <div class="col-lg-9 col-xl-6">
             <div class="input-group input-group-lg input-group-solid">
@@ -162,6 +158,12 @@
                 [class.is-valid]="isControlValid('website')"
                 />
             </div>
+          </div>
+        </div>-->
+        <div class="form-group row">
+          <div class="col-lg-9 col-xl-6 offset-lg-3 offset-xl-3">
+            <button type="submit" [disabled]="formGroup.invalid" class="btn btn-success mr-2" (click)="save()">Save Changes</button>
+<!--            <button type="reset" class="btn btn-secondary" (click)="cancel()">Cancel</button>-->
           </div>
         </div>
       </div>

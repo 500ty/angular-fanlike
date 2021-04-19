@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { AccountInformationComponent } from './account-information/account-information.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { EmailSettingsComponent } from './email-settings/email-settings.component';
@@ -9,12 +9,17 @@ import { SavedCreditCardsComponent } from './saved-credit-cards/saved-credit-car
 import { StatementsComponent } from './statements/statements.component';
 import { TaxInformationComponent } from './tax-information/tax-information.component';
 import { UserProfileComponent } from './user-profile.component';
+import { ProfilePaymentsInformationComponent } from './payments-information/payments-information.component';
 
 const routes: Routes = [
   {
     path: '',
     component: UserProfileComponent,
     children: [
+      {
+        path: 'payment-information',
+        component: ProfilePaymentsInformationComponent,
+      },
       {
         path: 'profile-overview',
         component: ProfileOverviewComponent,
@@ -47,8 +52,8 @@ const routes: Routes = [
         path: 'statements',
         component: StatementsComponent
       },
-      { path: '', redirectTo: 'profile-overview', pathMatch: 'full' },
-      { path: '**', redirectTo: 'profile-overview', pathMatch: 'full' },
+      {path: '', redirectTo: 'profile-overview', pathMatch: 'full'},
+      {path: '**', redirectTo: 'profile-overview', pathMatch: 'full'},
     ],
   },
 ];
@@ -57,4 +62,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class UserProfileRoutingModule { }
+export class UserProfileRoutingModule {
+}

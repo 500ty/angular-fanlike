@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {InlineSVGModule} from 'ng-inline-svg';
-import {NgbDropdownModule, NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbAlertModule, NgbDropdownModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import {CRUDTableModule} from '../../_metronic/shared/crud-table';
 import {WidgetsModule} from '../../_metronic/partials/content/widgets/widgets.module';
 import {DropdownMenusModule} from '../../_metronic/partials/content/dropdown-menus/dropdown-menus.module';
@@ -21,6 +21,10 @@ import {ProfileCardComponent} from './_components/profile-card/profile-card.comp
 import { SharedAppModule } from '@shared/shared.module';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { CoreModule } from '../../_metronic/core';
+import { ProfilePaymentComponent } from './payment/payment.component';
+import { ProfilePaymentsInformationComponent } from './payments-information/payments-information.component';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -33,7 +37,9 @@ import { CoreModule } from '../../_metronic/core';
     SavedCreditCardsComponent,
     TaxInformationComponent,
     StatementsComponent,
-    ProfileCardComponent
+    ProfileCardComponent,
+    ProfilePaymentComponent,
+    ProfilePaymentsInformationComponent
   ],
   imports: [
     CommonModule,
@@ -49,7 +55,10 @@ import { CoreModule } from '../../_metronic/core';
     WidgetsModule,
     SharedAppModule,
     ClipboardModule,
-    CoreModule
+    CoreModule,
+    MatRadioModule,
+    MatSnackBarModule,
+    NgbAlertModule
   ]
 })
 export class UserProfileModule {}

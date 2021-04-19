@@ -6,5 +6,7 @@ export const environment = {
   apiUrl: 'https://api.fanlike.net/v1',
   domain: {
     app: 'https://fanlike.net'
-  }
+  },
+  appName: 'Fanlike',
+  appShortName: 'Fanlike'
 };

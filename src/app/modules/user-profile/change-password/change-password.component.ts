@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
-import { AuthService, UserModel, ConfirmPasswordValidator } from '../../auth';
+import { AuthService, ConfirmPasswordValidator, UserModel } from '../../auth';
 
 @Component({
   selector: 'app-change-password',
@@ -45,7 +45,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
     });
   }
 
-  save() {
+  async save() {
     this.formGroup.markAllAsTouched();
     if (!this.formGroup.valid) {
       return;
@@ -53,10 +53,15 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
 
     this.user.password = this.formGroup.value.password;
     this.userService.isLoadingSubject.next(true);
-    setTimeout(() => {
-      this.userService.currentUserSubject.next(Object.assign({}, this.user));
-      this.userService.isLoadingSubject.next(false);
-    }, 2000);
+
+    try {
+      setTimeout(() => {
+        this.userService.currentUserSubject.next(Object.assign({}, this.user));
+        this.userService.isLoadingSubject.next(false);
+      }, 2000);
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   cancel() {

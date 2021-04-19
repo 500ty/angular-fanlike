@@ -10,7 +10,9 @@ export const environment = {
   apiUrl: 'https://api.fanlike.net/v1',
   domain: {
     app: 'https://localhost:4200'
-  }
+  },
+  appName: 'Fanlike',
+  appShortName: 'Fanlike'
 };
 
 /*
