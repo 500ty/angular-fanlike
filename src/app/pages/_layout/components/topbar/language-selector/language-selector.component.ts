@@ -28,11 +28,11 @@ export class LanguageSelectorComponent implements OnInit {
       name: 'Vietnamese',
       flag: './assets/media/svg/flags/220-vietnam.svg',
     },
-    {
-      lang: 'ch',
-      name: 'Mandarin',
-      flag: './assets/media/svg/flags/015-china.svg',
-    },
+    // {
+    //   lang: 'ch',
+    //   name: 'Mandarin',
+    //   flag: './assets/media/svg/flags/015-china.svg',
+    // },
     // {
     //   lang: 'es',
     //   name: 'Spanish',
