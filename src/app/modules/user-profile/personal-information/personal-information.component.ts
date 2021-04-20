@@ -49,7 +49,7 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
       first_name: ['', Validators.compose([Validators.required])],
       last_name: ['', Validators.compose([Validators.required])],
       phone: ['', Validators.compose([Validators.required])],
-      email: ['', Validators.compose([Validators.required])]
+      email: ['', Validators.compose([Validators.required, Validators.email])]
     });
   }
 

@@ -57,7 +57,8 @@ export class ProfilePaymentsInformationComponent implements OnInit, OnDestroy {
         Validators.required
       ])],
       paypal_email: [null, Validators.compose([
-        Validators.required
+        Validators.required,
+        Validators.email
       ])],
       paypal_minimum_payment: [25]
     });
@@ -85,7 +86,8 @@ export class ProfilePaymentsInformationComponent implements OnInit, OnDestroy {
         Validators.required
       ])],
       payoneer_email: [null, Validators.compose([
-        Validators.required
+        Validators.required,
+        Validators.email
       ])],
       payoneer_minimum_payment: [25]
     });

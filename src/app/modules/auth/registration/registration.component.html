@@ -30,43 +30,84 @@
     <!-- end::Alert error-->
 
     <!--begin::Form group-->
-    <div class="form-group">
-      <label class="font-size-h6 font-weight-bolder text-dark">Fullname</label>
-      <input
-        class="form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h6"
-        type="text"
-        name="fullname"
-        formControlName="fullname"
-        placeholder="Fullname"
-        autocomplete="off"
-        [ngClass]="{
-          'is-invalid': registrationForm.controls['fullname'].invalid
+    <div class="form-group form-row">
+      <div class="col-md-6">
+        <label class="font-size-h6 font-weight-bolder text-dark">First Name</label>
+        <input
+                class="form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h6"
+                type="text"
+                name="first_name"
+                formControlName="first_name"
+                placeholder="First name"
+                autocomplete="off"
+                [ngClass]="{
+          'is-invalid': registrationForm.controls['first_name'].invalid
         }"
-      />
-      <ng-container
-        [ngTemplateOutlet]="formError"
-        [ngTemplateOutletContext]="{
+        />
+        <ng-container
+                [ngTemplateOutlet]="formError"
+                [ngTemplateOutletContext]="{
           validation: 'required',
-          message: 'Fullname is required',
-          control: registrationForm.controls['fullname']
+          message: 'first_name is required',
+          control: registrationForm.controls['first_name']
         }"
-      ></ng-container>
-      <ng-container
-        [ngTemplateOutlet]="formError"
-        [ngTemplateOutletContext]="{
+        ></ng-container>
+        <ng-container
+                [ngTemplateOutlet]="formError"
+                [ngTemplateOutletContext]="{
           validation: 'minlength',
-          message: 'Fullname should have at least 3 symbols',
-          control: registrationForm.controls['fullname']
+          message: 'first_name should have at least 3 symbols',
+          control: registrationForm.controls['first_name']
         }"
-      ></ng-container>
-      <ng-container
-        [ngTemplateOutlet]="formError"
-        [ngTemplateOutletContext]="{
+        ></ng-container>
+        <ng-container
+                [ngTemplateOutlet]="formError"
+                [ngTemplateOutletContext]="{
           validation: 'maxLength',
-          message: 'Fullname should have maximum 100 symbols',
-          control: registrationForm.controls['fullname']
+          message: 'first_name should have maximum 100 symbols',
+          control: registrationForm.controls['first_name']
         }"
-      ></ng-container>
+        ></ng-container>
+      </div>
+      <div class="col-md-6">
+        <label class="font-size-h6 font-weight-bolder text-dark">Last Name</label>
+        <input
+                class="form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h6"
+                type="text"
+                name="last_name"
+                formControlName="last_name"
+                placeholder="Last name"
+                autocomplete="off"
+                [ngClass]="{
+          'is-invalid': registrationForm.controls['last_name'].invalid
+        }"
+        />
+        <ng-container
+                [ngTemplateOutlet]="formError"
+                [ngTemplateOutletContext]="{
+          validation: 'required',
+          message: 'last_name is required',
+          control: registrationForm.controls['last_name']
+        }"
+        ></ng-container>
+        <ng-container
+                [ngTemplateOutlet]="formError"
+                [ngTemplateOutletContext]="{
+          validation: 'minlength',
+          message: 'last_name should have at least 3 symbols',
+          control: registrationForm.controls['last_name']
+        }"
+        ></ng-container>
+        <ng-container
+                [ngTemplateOutlet]="formError"
+                [ngTemplateOutletContext]="{
+          validation: 'maxLength',
+          message: 'last_name should have maximum 100 symbols',
+          control: registrationForm.controls['last_name']
+        }"
+        ></ng-container>
+      </div>
+
     </div>
     <!--end::Form group-->
 
@@ -145,7 +186,7 @@
         [ngTemplateOutlet]="formError"
         [ngTemplateOutletContext]="{
           validation: 'minlength',
-          message: 'Password should have at least 3 symbols',
+          message: 'Password should have at least 8 symbols',
           control: registrationForm.controls['password']
         }"
       ></ng-container>
@@ -188,7 +229,7 @@
         [ngTemplateOutlet]="formError"
         [ngTemplateOutletContext]="{
           validation: 'minlength',
-          message: 'Confirm Password should have at least 3 symbols',
+          message: 'Confirm Password should have at least 8 symbols',
           control: registrationForm.controls['cPassword']
         }"
       ></ng-container>

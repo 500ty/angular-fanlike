@@ -48,18 +48,21 @@ export class AuthService implements OnDestroy {
   // public methods
   login(email: string, password: string): Observable<UserModel> {
     this.isLoadingSubject.next(true);
-    return this.authHttpService.login(email, password).pipe(
-      map((auth: AuthModel) => {
-        const result = this.setAuthFromLocalStorage(auth);
-        return result;
-      }),
-      switchMap(() => this.getUserByToken()),
-      catchError((err) => {
-        console.error('err', err);
-        return of(undefined);
-      }),
-      finalize(() => this.isLoadingSubject.next(false))
-    );
+    return this.authHttpService.login(email, password)
+      .pipe(
+        map(res => res.data),
+        map((auth: AuthModel) => {
+          console.log('login:', auth);
+          const result = this.setAuthFromLocalStorage(auth);
+          return result;
+        }),
+        switchMap(() => this.getUserByToken()),
+        catchError((err) => {
+          console.error('err', err);
+          return of(undefined);
+        }),
+        finalize(() => this.isLoadingSubject.next(false))
+      );
   }
 
   logout() {
@@ -92,6 +95,7 @@ export class AuthService implements OnDestroy {
 
   // need create new user then login
   registration(user: UserModel): Observable<any> {
+    console.log('registration-user');
     this.isLoadingSubject.next(true);
     return this.authHttpService.createUser(user).pipe(
       map(() => {
