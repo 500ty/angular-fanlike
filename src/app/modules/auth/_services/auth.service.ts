@@ -155,7 +155,7 @@ export class AuthService implements OnDestroy {
     );
   }
 
-  updateProfile(body: UserModel) {
+  updateProfile(body: any) {
     return this.apiService.post('/users/profile', body);
   }
 

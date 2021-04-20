@@ -84,7 +84,7 @@ export const DefaultLayoutConfig = {
 
     menu: {
       self: {
-        display: true,
+        display: false,
         dynamic: true, // static => true | dynamic => true
         layout: 'default', // tab/default,
         rootArrow: false,

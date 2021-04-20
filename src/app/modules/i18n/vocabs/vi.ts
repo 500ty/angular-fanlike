@@ -2,18 +2,24 @@
 export const locale = {
   lang: 'vi',
   data: {
+    RESPONSE: {
+      share_article: 'Chia sẻ bài viết',
+      join_group: 'Tham gia nhóm',
+    },
     TRANSLATOR: {
       SELECT: 'Chọn ngôn ngữ',
     },
     MENU: {
-      NEW: 'mới',
-      ACTIONS: 'Actions',
+      NEW: 'Mới',
+      ACTIONS: 'Hành động',
       CREATE_POST: 'Tạo bài viết',
       PAGES: 'Trang',
       FEATURES: 'Tính năng',
       APPS: 'Apps',
       DASHBOARD: 'Tổng quan',
       TASK: 'Công Việc',
+      HISTORY: 'Lịch sử',
+      PAYOUTS: 'Thanh toán',
     },
     AUTH: {
       GENERAL: {

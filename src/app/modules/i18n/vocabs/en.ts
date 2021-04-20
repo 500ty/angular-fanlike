@@ -2,6 +2,10 @@
 export const locale = {
   lang: 'en',
   data: {
+    RESPONSE: {
+      share_article: 'Share article',
+      join_group: 'Join group',
+    },
     TRANSLATOR: {
       SELECT: 'Select your language',
     },
@@ -14,6 +18,8 @@ export const locale = {
       APPS: 'Apps',
       DASHBOARD: 'Dashboard',
       TASK: 'Task List',
+      HISTORY: 'History',
+      PAYOUTS: 'Payouts',
     },
     AUTH: {
       GENERAL: {

@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable, Subscription } from 'rxjs';
-import { first } from 'rxjs/operators';
 import { AuthService, UserModel } from '../../auth';
+import { Observable, Subscription } from 'rxjs';
+import { Constants } from '@core/configs/constants';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserProfileService } from '../user-profile.service';
 
 @Component({
   selector: 'app-personal-information',
@@ -11,26 +12,55 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./personal-information.component.scss']
 })
 export class PersonalInformationComponent implements OnInit, OnDestroy {
-  formGroup: FormGroup;
+  submitted: boolean;
+
+  form: FormGroup;
+
+  validationMessages = {
+    name: {
+      required: 'Name is required.',
+      minlength: 'Name must be at least 3 characters.',
+      maxlength: 'Name can\'t be longer than 200 characters.'
+    },
+    minimum_payment: {
+      required: 'Minimum payment amounts is required.',
+      number: 'Invalid amount.'
+    },
+    phone: {
+      phoneFormat: 'Invalid phone number.'
+    }
+  };
+
   user: UserModel;
   firstUserState: UserModel;
   subscriptions: Subscription[] = [];
   // avatarPic = 'none';
   isLoading$: Observable<boolean>;
 
-  constructor(private userService: AuthService, private fb: FormBuilder,
-              public snackBar: MatSnackBar) {
-    this.isLoading$ = this.userService.isLoadingSubject.asObservable();
+  constants = Constants;
+
+  constructor(private fb: FormBuilder,
+              public snackBar: MatSnackBar,
+              private userProfileService: UserProfileService,
+              private authService: AuthService) {
+    this.isLoading$ = this.authService.isLoadingSubject.asObservable();
+
+    this.form = this.fb.group({
+      first_name: ['', Validators.compose([Validators.required])],
+      last_name: ['', Validators.compose([Validators.required])],
+      phone: ['', Validators.compose([Validators.required])],
+      email: ['', Validators.compose([Validators.required])]
+    });
   }
 
-  ngOnInit(): void {
-    const sb = this.userService.currentUserSubject.asObservable().pipe(
-      first(user => !!user)
+  ngOnInit() {
+    const sb = this.authService.currentUserSubject.asObservable().pipe(
+      // first(user => !!user)
     ).subscribe(user => {
       console.log(user);
       this.user = Object.assign({}, user);
       this.firstUserState = Object.assign({}, user);
-      this.loadForm();
+      this.form.patchValue(user);
     });
     this.subscriptions.push(sb);
   }
@@ -39,72 +69,55 @@ export class PersonalInformationComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(sb => sb.unsubscribe());
   }
 
-  loadForm() {
-    this.formGroup = this.fb.group({
-      // pic: [this.user.pic],
-      first_name: [this.user.first_name, Validators.required],
-      last_name: [this.user.last_name, Validators.required],
-      // companyName: [this.user.companyName, Validators.required],
-      phone: [this.user.phone, Validators.required],
-      email: [this.user.email, Validators.compose([Validators.required, Validators.email])],
-      // website: [this.user.website, Validators.required]
-    });
-  }
+  async onSubmit() {
+    this.submitted = true;
 
-  async save() {
-    this.formGroup.markAllAsTouched();
-    if (!this.formGroup.valid) {
+    // stop here if form is invalid
+    if (this.form.invalid) {
       return;
     }
 
-    const formValues = this.formGroup.value;
-    this.user = Object.assign(this.user, formValues);
+    // const { name } = this.form.value;
+    console.log(this.form.value);
 
-    // Do request to your server for user update, we just imitate user update there
-    this.userService.isLoadingSubject.next(true);
+    const {first_name, last_name, phone, email} = this.form.value;
+    const body = {
+      first_name,
+      last_name,
+      name: first_name + ' ' + last_name,
+      phone,
+      email,
+    };
+    console.log(body);
 
     try {
-      const userRes: any = await this.userService.updateProfile(this.user).toPromise();
-      console.log(userRes);
-      this.userService.currentUserSubject.next(Object.assign({}, this.user));
-      this.snackBar.open('Personal information has been updated successfully', 'Success', {
-        duration: 2000,
-      });
-    } catch (e) {
-      console.log(e);
-      this.snackBar.open(e.body.error, 'Error', {
+      const result: any = await this.userProfileService.updateProfile(body).toPromise();
+      // const result = null;
+      if (result) {
+        this.authService.currentUserSubject.next(Object.assign({}, result.data));
+        this.snackBar.open('Personal information has been updated successfully', 'Success', {
+          duration: 2000,
+        });
+      }
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+      this.snackBar.open(error.error.meta.messages, 'Error', {
         duration: 2000,
         panelClass: ['bg-danger']
       });
     }
-    this.userService.isLoadingSubject.next(false);
+    this.submitted = false;
   }
-
-  cancel() {
-    this.user = Object.assign({}, this.firstUserState);
-    this.loadForm();
-  }
-
-  // getPic() {
-  //   if (!this.user.pic) {
-  //     return 'none';
-  //   }
-  //
-  //   return `url('${this.user.pic}')`;
-  // }
-  //
-  // deletePic() {
-  //   this.user.pic = '';
-  // }
 
   // helpers for View
   isControlValid(controlName: string): boolean {
-    const control = this.formGroup.controls[controlName];
+    const control = this.form.controls[controlName];
     return control.valid && (control.dirty || control.touched);
   }
 
   isControlInvalid(controlName: string): boolean {
-    const control = this.formGroup.controls[controlName];
+    const control = this.form.controls[controlName];
     return control.invalid && (control.dirty || control.touched);
   }
 }

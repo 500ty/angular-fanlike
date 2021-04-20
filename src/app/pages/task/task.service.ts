@@ -16,8 +16,17 @@ export class TaskService {
   constructor(private api: ApiService) {
   }
 
-  fetch(page: number) {
+  shareArticle(page: number) {
     return this.api.get(`/articles?page=${page}`).pipe(
+      tap((res: any) => {
+        this.dataSource.next(res.data);
+        this.paginationSource.next(res.meta.pagination);
+      })
+    );
+  }
+
+  joinGroup(page: number) {
+    return this.api.get(`/fbgroups?page=${page}`).pipe(
       tap((res: any) => {
         this.dataSource.next(res.data);
         this.paginationSource.next(res.meta.pagination);

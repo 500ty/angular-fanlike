@@ -13,14 +13,19 @@ const routes: Routes = [
           import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
       },
       {
+        path: 'payouts',
+        loadChildren: () =>
+          import('./payouts/payouts.module').then((m) => m.PayoutsModule),
+      },
+      {
         path: 'task',
         loadChildren: () =>
           import('./task/task.module').then((m) => m.TaskModule),
       },
       {
-        path: 'payment',
+        path: 'history',
         loadChildren: () =>
-          import('../modules/payment/payment.module').then((m) => m.PaymentModule),
+          import('./history/history.module').then((m) => m.HistoryModule),
       },
       {
         path: 'builder',
@@ -71,7 +76,7 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/dashboard',
+        redirectTo: '/task/share-article',
         pathMatch: 'full',
       },
       {

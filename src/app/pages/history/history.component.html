@@ -1,0 +1,51 @@
+<div class="card card-custom card-stretch">
+  <div class="card-body" *ngIf="user$ | async as user">
+    <!-- begin:Table -->
+    <div *ngIf="data$ | async as dataHistories" class="table-responsive angular-bootstrap-table">
+      <table
+          class="table table-head-custom table-vertical-center overflow-hidden"
+      >
+        <thead>
+        <th>
+          Type
+        </th>
+        <th [style.width.px]="160">
+          Action at
+        </th>
+        <th [style.width.px]="160">
+          Verify at
+        </th>
+        <th [style.width.px]="100">
+          Received
+        </th>
+        <th [style.width.px]="120">
+          Status
+        </th>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of dataHistories.data">
+          <td>
+            {{ "RESPONSE." + item.type  | translate }}
+          </td>
+          <td>{{ item.created_at | date: 'dd/MM/yyyy hh:mm:ss' }}</td>
+          <td>{{ item.updated_at | date: 'dd/MM/yyyy hh:mm:ss' }}</td>
+          <td>price</td>
+          <td>
+                                    <span
+                                        class="label label-lg label-inline"
+                                        [class.label-light-primary]="item.status === 'waiting'"
+                                        [class.label-light-success]="item.status === 1"
+                                        [class.label-mute]="item.status === 2"
+                                    >
+                                    <ng-container *ngIf="item.status === 'waiting'">waiting</ng-container>
+                                    <ng-container *ngIf="item.status === 1">Shared</ng-container>
+                                    <ng-container *ngIf="item.status === 2">Closed</ng-container>
+                                  </span>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- end: Table -->
+  </div>
+</div>

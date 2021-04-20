@@ -1,22 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { TaskRoutingModule } from './task-routing.module';
-import { TaskComponent } from './task.component';
+import { HistoryRoutingModule } from './history-routing.module';
+import { HistoryComponent } from './history.component';
 import { CRUDTableModule } from '../../_metronic/shared/crud-table';
 import { ReactiveFormsModule } from '@angular/forms';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { ShareModule } from 'ngx-sharebuttons';
 import { SharedAppModule } from '@shared/shared.module';
-import { ShareArticleComponent } from './share-article/share-article.component';
-import { JoinGroupComponent } from './join-group/join-group.component';
 import { TranslationModule } from '../../modules/i18n/translation.module';
 
+
 @NgModule({
-  declarations: [TaskComponent, ShareArticleComponent, JoinGroupComponent],
+  declarations: [HistoryComponent],
   imports: [
     CommonModule,
-    TaskRoutingModule,
+    HistoryRoutingModule,
     CRUDTableModule,
     ReactiveFormsModule,
     InlineSVGModule,
@@ -25,4 +24,5 @@ import { TranslationModule } from '../../modules/i18n/translation.module';
     TranslationModule
   ]
 })
-export class TaskModule { }
+export class HistoryModule {
+}
