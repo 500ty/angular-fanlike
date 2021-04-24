@@ -3,8 +3,15 @@ export const locale = {
   lang: 'vi',
   data: {
     RESPONSE: {
-      share_article: 'Chia sẻ bài viết',
+      share_link: 'Chia sẻ link',
+      share_post: 'Chia sẻ Post',
       join_group: 'Tham gia nhóm',
+      share_page: 'Chia sẻ trang',
+      like_post: 'Thích bài viết',
+      like_page: 'Thích trang',
+      welcome: 'Chào mừng',
+      invite: 'Mời',
+      comment_post: 'Bình luận bài viết',
     },
     TRANSLATOR: {
       SELECT: 'Chọn ngôn ngữ',

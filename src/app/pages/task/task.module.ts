@@ -8,12 +8,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { ShareModule } from 'ngx-sharebuttons';
 import { SharedAppModule } from '@shared/shared.module';
-import { ShareArticleComponent } from './share-article/share-article.component';
-import { JoinGroupComponent } from './join-group/join-group.component';
 import { TranslationModule } from '../../modules/i18n/translation.module';
 
 @NgModule({
-  declarations: [TaskComponent, ShareArticleComponent, JoinGroupComponent],
+  declarations: [TaskComponent],
   imports: [
     CommonModule,
     TaskRoutingModule,
@@ -25,4 +23,5 @@ import { TranslationModule } from '../../modules/i18n/translation.module';
     TranslationModule
   ]
 })
-export class TaskModule { }
+export class TaskModule {
+}

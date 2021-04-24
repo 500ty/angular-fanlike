@@ -8,16 +8,11 @@
         </div>
         <div class="navi navi-hover navi-active navi-link-rounded navi-bold navi-icon-center navi-light-icon">
           <!--begin:Item-->
-          <div class="navi-item my-2">
-            <a [routerLink]="['/task/share-article']" routerLinkActive="active" href="#" class="navi-link">
-              <span class="navi-text font-weight-bolder font-size-lg">Share Article</span>
-            </a>
-          </div>
-          <!--end:Item-->
-          <!--begin:Item-->
-          <div class="navi-item my-2">
-            <a [routerLink]="['/task/join-group']" routerLinkActive="active" href="#" class="navi-link">
-              <span class="navi-text font-weight-bolder font-size-lg">Join Group</span>
+          <div *ngFor="let item of typeData" class="navi-item my-2">
+            <a (click)="onSelectType(item.name)" [ngClass]="{'active': item.name === type}" href="#" class="navi-link">
+              <span class="navi-text font-weight-bolder font-size-lg">
+                {{ 'RESPONSE.' + item.name | translate }}
+              </span>
             </a>
           </div>
           <!--end:Item-->
@@ -25,9 +20,76 @@
       </div>
     </div>
   </div>
-  <div class="flex-row-fluid ml-lg-8">
-    <div class="d-flex flex-column flex-grow-1">
-      <router-outlet></router-outlet>
+  <div class="flex-row-fluid ml-lg-8" *ngIf="user$ | async as user">
+    <div class="card card-custom gutter-b mb-0">
+      <div class="card-header">
+        <div class="card-title">
+          <h3 class="card-label">Tasks list</h3>
+        </div>
+      </div>
+      <div class="card-body">
+        <!-- begin:Table -->
+        <div class="table-responsive angular-bootstrap-table">
+          <table
+                  class="table table-head-custom table-vertical-center overflow-hidden"
+          >
+            <thead>
+            <th>
+              Title
+            </th>
+            <th class="text-center" [style.width.px]="100">
+              Receive
+            </th>
+            <th class="text-center" [style.width.px]="100">
+              Remaining
+            </th>
+            <th class="text-center" [style.width.px]="100">
+              Status
+            </th>
+            <th [style.width.px]="100">
+              Date
+            </th>
+            <th [style.width.px]="160">
+              Actions
+            </th>
+            </thead>
+            <tbody>
+            <tr *ngFor="let task of this.data$ | async">
+              <td>
+                <a href="{{ task.link }}" target="_blank">
+                  {{ task.name }}
+                </a>
+              </td>
+              <td class="text-center">{{ task.receive || 0 }}</td>
+              <td class="text-center">{{ task.remain }}/{{ task.budget || 0 }}</td>
+              <td class="text-center">
+                        <span
+                                class="label label-lg label-inline"
+                                [class.label-light-primary]="task.status === 0"
+                                [class.label-light-success]="task.status === 1"
+                                [class.label-mute]="task.status === 2"
+                        >
+                        <ng-container *ngIf="task.status === 0">Open</ng-container>
+                        <ng-container *ngIf="task.status === 1">Shared</ng-container>
+                        <ng-container *ngIf="task.status === 2">Closed</ng-container>
+                      </span>
+              </td>
+              <td>{{ task.created_at | date: 'dd/MM/yyyy' }}</td>
+              <td>
+                <a shareButton="facebook" [url]="task.link + '?utm_source=FanLike&utm_medium=' + user.hash_id"
+                   class="btn btn-primary"
+                   (click)="saveAction(task)">{{ 'RESPONSE.' + task.action_type | translate }}</a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- end: Table -->
+        <app-paginator *ngIf="pagination$ | async as pagination"
+                       class="d-flex justify-content-between align-items-center flex-wrap"
+                       [paginator]="pagination"
+                       [isLoading]="isLoading" (paginate)="paginate($event)"></app-paginator>
+      </div>
     </div>
   </div>
 </div>

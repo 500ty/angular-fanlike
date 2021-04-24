@@ -3,8 +3,15 @@ export const locale = {
   lang: 'en',
   data: {
     RESPONSE: {
-      share_article: 'Share article',
+      share_link: 'Share link',
+      share_post: 'Share post',
       join_group: 'Join group',
+      share_page: 'Share page',
+      like_post: 'Like post',
+      like_page: 'Like page',
+      welcome: 'Welcome',
+      invite: 'Invite',
+      comment_post: 'Comment post',
     },
     TRANSLATOR: {
       SELECT: 'Select your language',

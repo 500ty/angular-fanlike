@@ -76,7 +76,7 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/task/share-article',
+        redirectTo: '/task',
         pathMatch: 'full',
       },
       {
