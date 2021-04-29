@@ -5,9 +5,11 @@ import { PayoutsRoutingModule } from './payouts-routing.module';
 import { PayoutsComponent } from './payouts.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { CRUDTableModule } from '../../_metronic/shared/crud-table';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { SharedAppModule } from '@shared/shared.module';
+import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
+import { TranslationModule } from '../../modules/i18n/translation.module';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -18,7 +20,10 @@ import { SharedAppModule } from '@shared/shared.module';
     MatRadioModule,
     CRUDTableModule,
     InlineSVGModule,
-    SharedAppModule
+    SharedAppModule,
+    NgbAlertModule,
+    TranslationModule,
+    MatSnackBarModule
   ]
 })
 export class PayoutsModule { }

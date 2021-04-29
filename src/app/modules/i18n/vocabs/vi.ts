@@ -13,6 +13,9 @@ export const locale = {
       invite: 'Mời',
       comment_post: 'Bình luận bài viết',
     },
+    MESSAGE: {
+      'We have received your request': 'Chúng tôi đã nhận được yêu cầu của bạn'
+    },
     TRANSLATOR: {
       SELECT: 'Chọn ngôn ngữ',
     },
@@ -27,6 +30,7 @@ export const locale = {
       TASK: 'Công Việc',
       HISTORY: 'Lịch sử',
       PAYOUTS: 'Thanh toán',
+      FAQ: 'FAQ',
     },
     AUTH: {
       GENERAL: {

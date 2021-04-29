@@ -13,6 +13,9 @@ export const locale = {
       invite: 'Invite',
       comment_post: 'Comment post',
     },
+    MESSAGE: {
+      'We have received your request': 'We have received your request'
+    },
     TRANSLATOR: {
       SELECT: 'Select your language',
     },
@@ -27,6 +30,7 @@ export const locale = {
       TASK: 'Task List',
       HISTORY: 'History',
       PAYOUTS: 'Payouts',
+      FAQ: 'FAQ',
     },
     AUTH: {
       GENERAL: {

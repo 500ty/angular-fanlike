@@ -24,6 +24,8 @@ export class UserModel extends AuthModel {
   lastname: string;
   last_name: string;
   website: string;
+  coin: number;
+  balance: number;
   // account information
   language: string;
   timeZone: string;
