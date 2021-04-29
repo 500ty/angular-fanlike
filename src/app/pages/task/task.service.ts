@@ -26,6 +26,12 @@ export class TaskService {
       case 'join_group':
         url = `/fbgroups?page=${page}`;
         break;
+      case 'like_page':
+        url = `/fbpages?page=${page}`;
+        break;
+      case 'interaction_post':
+        url = `/fbposts?page=${page}`;
+        break;
     }
     return this.api.get(url).pipe(
       tap((res: any) => {

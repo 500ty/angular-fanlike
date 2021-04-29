@@ -3,7 +3,7 @@
     <div class="card card-custom card-stretch">
       <div class="card-body px-5">
         <div class="navi-section mb-2 font-size-h6 font-weight-bold pb-0 d-flex">
-          <span>Filter</span>
+          <span>{{ 'TITLE.filter' | translate }}</span>
           <i class="flaticon2-console ml-auto"></i>
         </div>
         <div class="navi navi-hover navi-active navi-link-rounded navi-bold navi-icon-center navi-light-icon">
@@ -24,7 +24,7 @@
     <div class="card card-custom gutter-b mb-0">
       <div class="card-header">
         <div class="card-title">
-          <h3 class="card-label">Tasks list</h3>
+          <h3 class="card-label">{{ 'TITLE.tasks_list' | translate }}</h3>
         </div>
       </div>
       <div class="card-body">
@@ -35,22 +35,22 @@
           >
             <thead>
             <th>
-              Title
+              {{ 'TABLE.title' | translate }}
             </th>
             <th class="text-center" [style.width.px]="100">
-              Receive
+              {{ 'TABLE.receive' | translate }}
             </th>
             <th class="text-center" [style.width.px]="100">
-              Remaining
+              {{ 'TABLE.remaining' | translate }}
             </th>
             <th class="text-center" [style.width.px]="100">
-              Status
+              {{ 'TABLE.status' | translate }}
             </th>
             <th [style.width.px]="100">
-              Date
+              {{ 'TABLE.date' | translate }}
             </th>
             <th [style.width.px]="160">
-              Actions
+              {{ 'TABLE.actions' | translate }}
             </th>
             </thead>
             <tbody>
@@ -69,16 +69,24 @@
                                 [class.label-light-success]="task.status === 1"
                                 [class.label-mute]="task.status === 2"
                         >
-                        <ng-container *ngIf="task.status === 0">Open</ng-container>
-                        <ng-container *ngIf="task.status === 1">Shared</ng-container>
-                        <ng-container *ngIf="task.status === 2">Closed</ng-container>
+                        <ng-container *ngIf="task.status === 0">{{ 'STATUS.open' | translate }}</ng-container>
+                        <ng-container *ngIf="task.status === 1">{{ 'STATUS.shared' | translate }}</ng-container>
+                        <ng-container *ngIf="task.status === 2">{{ 'STATUS.closed' | translate }}</ng-container>
                       </span>
               </td>
               <td>{{ task.created_at | date: 'dd/MM/yyyy' }}</td>
               <td>
-                <a shareButton="facebook" [url]="task.link + '?utm_source=FanLike&utm_medium=' + user.hash_id"
+                <a *ngIf="task.action_type === 'share_post';else templateButtonAction"
+                   shareButton="facebook" [url]="task.link + '?utm_source=FanLike&utm_medium=' + user.hash_id"
                    class="btn btn-primary"
                    (click)="saveAction(task)">{{ 'RESPONSE.' + task.action_type | translate }}</a>
+                <ng-template #templateButtonAction>
+                  <a [href]="task.link + '?utm_source=FanLike&utm_medium=' + user.hash_id"
+                     target="_blank"
+                     class="btn btn-primary" (click)="saveAction(task)">
+                    {{ 'RESPONSE.' + task.action_type | translate }}
+                  </a>
+                </ng-template>
               </td>
             </tr>
             </tbody>

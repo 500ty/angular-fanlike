@@ -23,10 +23,10 @@ export class TaskComponent implements OnInit, AfterViewInit {
       name: 'join_group'
     },
     {
-      name: 'like_post'
+      name: 'like_page'
     },
     {
-      name: 'comment_post'
+      name: 'interaction_post'
     }
   ];
   data: any;

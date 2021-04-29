@@ -12,6 +12,33 @@ export const locale = {
       welcome: 'Chào mừng',
       invite: 'Mời',
       comment_post: 'Bình luận bài viết',
+      interaction_post: 'Tương tác bài viết',
+    },
+    STATUS: {
+      open: 'Mở',
+      shared: 'Đã chia sẻ',
+      closed: 'Đã đóng',
+    },
+    BUTTON: {
+      submit: 'Gửi',
+      edit: 'Sửa',
+    },
+    TABLE: {
+      title: 'Tiêu đề',
+      receive: 'Nhận',
+      remaining: 'Còn lại',
+      status: 'Trạng thái',
+      date: 'Ngày',
+      actions: 'Hành động',
+      request_date: 'Ngày yêu cầu',
+      payout_date: 'Ngày thanh toán',
+      payment_method: 'Phương thức thanh toán',
+      amount: 'Số tiền',
+    },
+    TITLE: {
+      tasks_list: 'Danh sách công việc',
+      filter: 'Bộ lọc',
+      total_amount: 'Tổng tiền',
     },
     MESSAGE: {
       'We have received your request': 'Chúng tôi đã nhận được yêu cầu của bạn'

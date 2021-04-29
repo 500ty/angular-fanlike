@@ -12,6 +12,33 @@ export const locale = {
       welcome: 'Welcome',
       invite: 'Invite',
       comment_post: 'Comment post',
+      interaction_post: 'Interaction post',
+    },
+    STATUS: {
+      open: 'Open',
+      shared: 'Shared',
+      closed: 'Closed',
+    },
+    BUTTON: {
+      submit: 'Submit',
+      edit: 'Edit',
+    },
+    TABLE: {
+      title: 'Title',
+      receive: 'Receive',
+      remaining: 'Remaining',
+      status: 'Status',
+      date: 'Date',
+      actions: 'Actions',
+      request_date: 'Request date',
+      payout_date: 'Payout date',
+      payment_method: 'Payment method',
+      amount: 'Amount',
+    },
+    TITLE: {
+      tasks_list: 'Tasks list',
+      filter: 'Filter',
+      total_amount: 'Total amount'
     },
     MESSAGE: {
       'We have received your request': 'We have received your request'
