@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '@core/services/api.service';
-import { AuthService } from '../auth';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@env/environment';
 import { tap } from 'rxjs/operators';
+import { AuthService } from './auth.service';
 
 @Injectable()
 export class UserProfileService {
@@ -18,7 +18,8 @@ export class UserProfileService {
     return this.http.post(this.apiUrl + '/users/profile', body, {
       headers: this.getHeaderConfig()
     }).pipe(
-      tap(() => {
+      tap((res) => {
+        console.log('UserProfileService-updateProfile', res);
         this.authService.getUserByToken();
       })
     );

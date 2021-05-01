@@ -1,12 +1,10 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  ElementRef,
-  AfterViewInit,
-} from '@angular/core';
-import { LayoutService, LayoutInitService } from '../../_metronic/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, } from '@angular/core';
+import { LayoutInitService, LayoutService } from '../../_metronic/core';
 import KTLayoutContent from '../../../assets/js/layout/base/content';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { HttpClient } from '@angular/common/http';
+import { UserProfileService } from '../../modules/auth/_services/user-profile.service';
+import { AuthService } from '../../modules/auth';
 
 @Component({
   selector: 'app-layout',
@@ -38,13 +36,24 @@ export class LayoutComponent implements OnInit, AfterViewInit {
   extrasUserOffcanvasDisplay = false;
   extrasQuickPanelDisplay = false;
   extrasScrollTopDisplay = false;
-  @ViewChild('ktAside', { static: true }) ktAside: ElementRef;
-  @ViewChild('ktHeaderMobile', { static: true }) ktHeaderMobile: ElementRef;
-  @ViewChild('ktHeader', { static: true }) ktHeader: ElementRef;
+  @ViewChild('ktAside', {static: true}) ktAside: ElementRef;
+  @ViewChild('ktHeaderMobile', {static: true}) ktHeaderMobile: ElementRef;
+  @ViewChild('ktHeader', {static: true}) ktHeader: ElementRef;
+  @ViewChild('modalVerifyFacebookProfile', {static: true}) modalVerifyFacebookProfile: any;
+
+  // VerifyFacebookProfile
+  formFbId: any;
+  formFbIdError: boolean;
+  fbid: any;
+  isLoadingVerifyFacebookProfile: boolean;
 
   constructor(
     private initService: LayoutInitService,
     private layout: LayoutService,
+    private modalService: NgbModal,
+    private http: HttpClient,
+    private userProfileService: UserProfileService,
+    private auth: AuthService
   ) {
     this.initService.init();
   }
@@ -111,7 +120,7 @@ export class LayoutComponent implements OnInit, AfterViewInit {
         if (this.asideHTMLAttributes.hasOwnProperty(key)) {
           this.ktAside.nativeElement.attributes[key] = this.asideHTMLAttributes[
             key
-          ];
+            ];
         }
       }
     }
@@ -121,7 +130,7 @@ export class LayoutComponent implements OnInit, AfterViewInit {
         if (this.headerMobileAttributes.hasOwnProperty(key)) {
           this.ktHeaderMobile.nativeElement.attributes[
             key
-          ] = this.headerMobileAttributes[key];
+            ] = this.headerMobileAttributes[key];
         }
       }
     }
@@ -131,11 +140,58 @@ export class LayoutComponent implements OnInit, AfterViewInit {
         if (this.headerHTMLAttributes.hasOwnProperty(key)) {
           this.ktHeader.nativeElement.attributes[
             key
-          ] = this.headerHTMLAttributes[key];
+            ] = this.headerHTMLAttributes[key];
         }
       }
     }
     // Init Content
     KTLayoutContent.init('kt_content');
+
+    const user = this.auth.currentUserValue;
+    console.log(user);
+    if (!user.fb_id) {
+      this.openModalVerifyFacebookProfile();
+    }
+  }
+
+  async onUpdateProfileLink(event: any) {
+    console.log(event);
+    this.isLoadingVerifyFacebookProfile = true;
+    this.formFbIdError = false;
+    try {
+      const res = await this.http.post('https://us-central1-moli-content.cloudfunctions.net/webApi/api/v1/tools/facebookIdFinder', {
+        url: event
+      }).toPromise();
+      console.log(res);
+      if (res) {
+        this.fbid = res;
+      } else {
+        this.formFbIdError = true;
+      }
+    } catch (e) {
+      this.fbid = null;
+      this.formFbIdError = true;
+    }
+    this.isLoadingVerifyFacebookProfile = false;
+  }
+
+  openModalVerifyFacebookProfile() {
+    this.modalService.open(this.modalVerifyFacebookProfile,
+      {
+        centered: true,
+        backdrop: 'static'
+      }
+    );
+  }
+
+  async onSaveFacebookId() {
+    const user = this.auth.currentUserValue;
+    const userRes = await this.userProfileService.updateProfile({
+      fb_id: this.fbid,
+      name: user.name,
+      email: user.email,
+    }).toPromise();
+    console.log(userRes);
+    this.modalService.dismissAll();
   }
 }

@@ -4,7 +4,7 @@ import { AuthService, UserModel } from '../../auth';
 import { Observable, Subscription } from 'rxjs';
 import { Constants } from '@core/configs/constants';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { UserProfileService } from '../user-profile.service';
+import { UserProfileService } from '../../auth/_services/user-profile.service';
 
 @Component({
   selector: 'app-personal-information',

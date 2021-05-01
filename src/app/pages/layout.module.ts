@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { PagesRoutingModule } from './pages-routing.module';
 import {
+  NgbAlertModule,
   NgbDropdownModule,
   NgbProgressbarModule,
 } from '@ng-bootstrap/ng-bootstrap';
@@ -21,6 +22,8 @@ import { CoreModule } from '../_metronic/core';
 import { SubheaderModule } from '../_metronic/partials/layout/subheader/subheader.module';
 import { AsideDynamicComponent } from './_layout/components/aside-dynamic/aside-dynamic.component';
 import { HeaderMenuDynamicComponent } from './_layout/components/header/header-menu-dynamic/header-menu-dynamic.component';
+import { SharedAppModule } from '@shared/shared.module';
+import { UserProfileService } from '../modules/auth/_services/user-profile.service';
 
 @NgModule({
   declarations: [
@@ -46,6 +49,11 @@ import { HeaderMenuDynamicComponent } from './_layout/components/header/header-m
     NgbProgressbarModule,
     CoreModule,
     SubheaderModule,
+    SharedAppModule,
+    NgbAlertModule,
   ],
+  providers: [
+    UserProfileService
+  ]
 })
 export class LayoutModule { }

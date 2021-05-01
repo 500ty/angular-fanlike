@@ -24,7 +24,7 @@ import { CoreModule } from '../../_metronic/core';
 import { ProfilePaymentsInformationComponent } from './payments-information/payments-information.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { UserProfileService } from './user-profile.service';
+import { UserProfileService } from '../auth/_services/user-profile.service';
 
 @NgModule({
   declarations: [
