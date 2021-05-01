@@ -5,6 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient } from '@angular/common/http';
 import { UserProfileService } from '../../modules/auth/_services/user-profile.service';
 import { AuthService } from '../../modules/auth';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-layout',
@@ -53,7 +54,8 @@ export class LayoutComponent implements OnInit, AfterViewInit {
     private modalService: NgbModal,
     private http: HttpClient,
     private userProfileService: UserProfileService,
-    private auth: AuthService
+    private auth: AuthService,
+    public snackBar: MatSnackBar
   ) {
     this.initService.init();
   }
@@ -185,13 +187,23 @@ export class LayoutComponent implements OnInit, AfterViewInit {
   }
 
   async onSaveFacebookId() {
-    const user = this.auth.currentUserValue;
-    const userRes = await this.userProfileService.updateProfile({
-      fb_id: this.fbid,
-      name: user.name,
-      email: user.email,
-    }).toPromise();
-    console.log(userRes);
-    this.modalService.dismissAll();
+    try {
+      const user = this.auth.currentUserValue;
+      const userRes = await this.userProfileService.updateProfile({
+        fb_id: this.fbid,
+        name: user.name,
+        email: user.email,
+      }).toPromise();
+      console.log(userRes);
+      this.modalService.dismissAll();
+      this.snackBar.open('Facebook ID has been updated successfully', 'Success', {
+        duration: 2000,
+      });
+    } catch (error) {
+      this.snackBar.open(error.error.meta.messages, 'Error', {
+        duration: 2000,
+        panelClass: ['bg-danger']
+      });
+    }
   }
 }

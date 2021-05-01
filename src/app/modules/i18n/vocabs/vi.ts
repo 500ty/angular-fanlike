@@ -3,8 +3,45 @@ export const locale = {
   lang: 'vi',
   data: {
     RESPONSE: {
-      share_article: 'Chia sẻ bài viết',
+      share_link: 'Chia sẻ link',
+      share_post: 'Chia sẻ Post',
       join_group: 'Tham gia nhóm',
+      share_page: 'Chia sẻ trang',
+      like_post: 'Thích bài viết',
+      like_page: 'Thích trang',
+      welcome: 'Chào mừng',
+      invite: 'Mời',
+      comment_post: 'Bình luận bài viết',
+      interaction_post: 'Tương tác bài viết',
+    },
+    STATUS: {
+      open: 'Mở',
+      shared: 'Đã chia sẻ',
+      closed: 'Đã đóng',
+    },
+    BUTTON: {
+      submit: 'Gửi',
+      edit: 'Sửa',
+    },
+    TABLE: {
+      title: 'Tiêu đề',
+      receive: 'Nhận',
+      remaining: 'Còn lại',
+      status: 'Trạng thái',
+      date: 'Ngày',
+      actions: 'Hành động',
+      request_date: 'Ngày yêu cầu',
+      payout_date: 'Ngày thanh toán',
+      payment_method: 'Phương thức thanh toán',
+      amount: 'Số tiền',
+    },
+    TITLE: {
+      tasks_list: 'Danh sách công việc',
+      filter: 'Bộ lọc',
+      total_amount: 'Tổng tiền',
+    },
+    MESSAGE: {
+      'We have received your request': 'Chúng tôi đã nhận được yêu cầu của bạn'
     },
     TRANSLATOR: {
       SELECT: 'Chọn ngôn ngữ',
@@ -20,6 +57,7 @@ export const locale = {
       TASK: 'Công Việc',
       HISTORY: 'Lịch sử',
       PAYOUTS: 'Thanh toán',
+      FAQ: 'FAQ',
     },
     AUTH: {
       GENERAL: {

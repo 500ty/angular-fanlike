@@ -5,7 +5,7 @@ import { AuthService } from '../_services/auth.service';
 import { Router } from '@angular/router';
 import { ConfirmPasswordValidator } from './confirm-password.validator';
 import { UserModel } from '../_models/user.model';
-import { first } from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-registration',
@@ -44,7 +44,15 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   initForm() {
     this.registrationForm = this.fb.group(
       {
-        fullname: [
+        first_name: [
+          '',
+          Validators.compose([
+            Validators.required,
+            Validators.minLength(3),
+            Validators.maxLength(100),
+          ]),
+        ],
+        last_name: [
           '',
           Validators.compose([
             Validators.required,
@@ -53,7 +61,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
           ]),
         ],
         email: [
-          'qwe@qwe.qwe',
+          '',
           Validators.compose([
             Validators.required,
             Validators.email,
@@ -65,7 +73,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
           '',
           Validators.compose([
             Validators.required,
-            Validators.minLength(3),
+            Validators.minLength(8),
             Validators.maxLength(100),
           ]),
         ],
@@ -73,7 +81,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
           '',
           Validators.compose([
             Validators.required,
-            Validators.minLength(3),
+            Validators.minLength(8),
             Validators.maxLength(100),
           ]),
         ],
@@ -87,16 +95,30 @@ export class RegistrationComponent implements OnInit, OnDestroy {
 
   submit() {
     this.hasError = false;
-    const result = {};
+    const result: any = {};
     Object.keys(this.f).forEach(key => {
       result[key] = this.f[key].value;
     });
-    const newUser = new UserModel();
-    newUser.setUser(result);
+
+    console.log(result);
+    const {email, first_name, last_name, password, cPassword} = result;
+    const newUser: any = {
+      email,
+      first_name,
+      last_name,
+      password,
+      password_confirmation: cPassword
+    };
+
+    // const newUser = new UserModel();
+    // newUser.setUser(result);
     const registrationSubscr = this.authService
       .registration(newUser)
-      .pipe(first())
+      .pipe(
+        first()
+      )
       .subscribe((user: UserModel) => {
+        console.log('registrationSubscr:', user);
         if (user) {
           this.router.navigate(['/']);
         } else {

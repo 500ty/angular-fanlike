@@ -28,6 +28,11 @@ const routes: Routes = [
           import('./history/history.module').then((m) => m.HistoryModule),
       },
       {
+        path: 'faq',
+        loadChildren: () =>
+          import('./faq/faq.module').then((m) => m.FaqModule),
+      },
+      {
         path: 'builder',
         loadChildren: () =>
           import('./builder/builder.module').then((m) => m.BuilderModule),
@@ -76,7 +81,7 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/task/share-article',
+        redirectTo: '/task',
         pathMatch: 'full',
       },
       {

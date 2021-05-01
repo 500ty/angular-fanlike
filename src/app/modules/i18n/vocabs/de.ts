@@ -2,6 +2,17 @@
 export const locale = {
   lang: 'de',
   data: {
+    RESPONSE: {
+      share_link: 'Share article',
+      share_post: 'Share Post',
+      join_group: 'Join group',
+      share_page: 'Share Page',
+      like_post: 'Like Post',
+      like_page: 'Like Page',
+      welcome: 'Welcome',
+      invite: 'Invite',
+      comment_post: 'Comment post',
+    },
     TRANSLATOR: {
       SELECT: 'Wähle deine Sprache',
     },

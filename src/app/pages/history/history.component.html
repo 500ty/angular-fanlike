@@ -3,6 +3,7 @@
     <!-- begin:Table -->
     <div *ngIf="data$ | async as dataHistories" class="table-responsive angular-bootstrap-table">
       <table
+              *ngIf="dataHistories.data.length;else templateNoData"
           class="table table-head-custom table-vertical-center overflow-hidden"
       >
         <thead>
@@ -18,6 +19,9 @@
         <th [style.width.px]="100">
           Received
         </th>
+        <th [style.width.px]="100">
+          IP
+        </th>
         <th [style.width.px]="120">
           Status
         </th>
@@ -30,21 +34,27 @@
           <td>{{ item.created_at | date: 'dd/MM/yyyy hh:mm:ss' }}</td>
           <td>{{ item.updated_at | date: 'dd/MM/yyyy hh:mm:ss' }}</td>
           <td>price</td>
+          <td>{{ item.ip }}</td>
           <td>
-                                    <span
-                                        class="label label-lg label-inline"
-                                        [class.label-light-primary]="item.status === 'waiting'"
-                                        [class.label-light-success]="item.status === 1"
-                                        [class.label-mute]="item.status === 2"
-                                    >
-                                    <ng-container *ngIf="item.status === 'waiting'">waiting</ng-container>
-                                    <ng-container *ngIf="item.status === 1">Shared</ng-container>
-                                    <ng-container *ngIf="item.status === 2">Closed</ng-container>
-                                  </span>
+            <span
+                class="label label-lg label-inline"
+                [class.label-light-warning]="item.status === 'waiting'"
+                [class.label-light-success]="item.status === 'award'"
+                [class.label-error]="item.status === 'error'"
+            >
+            <ng-container *ngIf="item.status === 'waiting'">Waiting</ng-container>
+            <ng-container *ngIf="item.status === 'award'">Award</ng-container>
+            <ng-container *ngIf="item.status === 'error'">Not Accept</ng-container>
+          </span>
           </td>
         </tr>
         </tbody>
       </table>
+      <ng-template #templateNoData>
+        <div class="text-center">
+          No records found
+        </div>
+      </ng-template>
     </div>
     <!-- end: Table -->
   </div>

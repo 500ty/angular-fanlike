@@ -24,7 +24,7 @@ export const Constants = {
   ],
 
   table: {
-    rows: 20,
+    rows: 50,
     rowsPerPageOptions: [10, 20, 50, 100]
   },
   minimumPayment: 0

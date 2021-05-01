@@ -6,7 +6,6 @@ export class UserModel extends AuthModel {
   id: number;
   hash_id: string;
   fb_id: string;
-  balance: number;
   username: string;
   password: string;
   name: string;
@@ -26,6 +25,8 @@ export class UserModel extends AuthModel {
   lastname: string;
   last_name: string;
   website: string;
+  coin: number;
+  balance: number;
   // account information
   language: string;
   timeZone: string;

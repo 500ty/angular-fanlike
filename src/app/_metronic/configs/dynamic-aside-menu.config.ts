@@ -36,5 +36,14 @@ export const DynamicAsideMenuConfig = {
       translate: 'MENU.PAYOUTS',
       bullet: 'dot',
     },
+    // {
+    //   title: 'FAQ',
+    //   root: true,
+    //   icon: 'flaticon2-architecture-and-city',
+    //   svg: './assets/media/svg/icons/Design/Layers.svg',
+    //   page: '/faq',
+    //   translate: 'MENU.FAQ',
+    //   bullet: 'dot',
+    // },
   ]
 };

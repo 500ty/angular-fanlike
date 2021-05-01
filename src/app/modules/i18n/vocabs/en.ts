@@ -3,8 +3,45 @@ export const locale = {
   lang: 'en',
   data: {
     RESPONSE: {
-      share_article: 'Share article',
+      share_link: 'Share link',
+      share_post: 'Share post',
       join_group: 'Join group',
+      share_page: 'Share page',
+      like_post: 'Like post',
+      like_page: 'Like page',
+      welcome: 'Welcome',
+      invite: 'Invite',
+      comment_post: 'Comment post',
+      interaction_post: 'Interaction post',
+    },
+    STATUS: {
+      open: 'Open',
+      shared: 'Shared',
+      closed: 'Closed',
+    },
+    BUTTON: {
+      submit: 'Submit',
+      edit: 'Edit',
+    },
+    TABLE: {
+      title: 'Title',
+      receive: 'Receive',
+      remaining: 'Remaining',
+      status: 'Status',
+      date: 'Date',
+      actions: 'Actions',
+      request_date: 'Request date',
+      payout_date: 'Payout date',
+      payment_method: 'Payment method',
+      amount: 'Amount',
+    },
+    TITLE: {
+      tasks_list: 'Tasks list',
+      filter: 'Filter',
+      total_amount: 'Total amount'
+    },
+    MESSAGE: {
+      'We have received your request': 'We have received your request'
     },
     TRANSLATOR: {
       SELECT: 'Select your language',
@@ -20,6 +57,7 @@ export const locale = {
       TASK: 'Task List',
       HISTORY: 'History',
       PAYOUTS: 'Payouts',
+      FAQ: 'FAQ',
     },
     AUTH: {
       GENERAL: {
