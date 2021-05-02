@@ -40,15 +40,15 @@
         </div>
       </div>
       </ng-container>
-      <ng-template #templateNoPaymentInfo>
-        <ngb-alert [dismissible]="false">
-          <div class="text-center h4">
-            <p>You need to link a payment method to your account.</p>
-            <p>You can add a payment methods in <a [routerLink]="['/user-profile/payment-information']" href="#">Payment Settings</a></p>
-          </div>
-        </ngb-alert>
-      </ng-template>
     </div>
+    <ng-template #templateNoPaymentInfo>
+      <ngb-alert [dismissible]="false">
+        <div class="text-center h4">
+          <p>You need to link a payment method to your account.</p>
+          <p>You can add a payment methods in <a [routerLink]="['/user-profile/payment-information']" href="#">Payment Settings</a></p>
+        </div>
+      </ngb-alert>
+    </ng-template>
   </div>
   <div class="card card-custom mb-5">
     <div class="card-body">
