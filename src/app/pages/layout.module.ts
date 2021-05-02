@@ -24,6 +24,7 @@ import { AsideDynamicComponent } from './_layout/components/aside-dynamic/aside-
 import { HeaderMenuDynamicComponent } from './_layout/components/header/header-menu-dynamic/header-menu-dynamic.component';
 import { SharedAppModule } from '@shared/shared.module';
 import { UserProfileService } from '../modules/auth/_services/user-profile.service';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { UserProfileService } from '../modules/auth/_services/user-profile.servi
     SubheaderModule,
     SharedAppModule,
     NgbAlertModule,
+    MatSnackBarModule
   ],
   providers: [
     UserProfileService
