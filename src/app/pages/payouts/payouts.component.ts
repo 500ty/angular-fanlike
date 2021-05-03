@@ -4,7 +4,7 @@ import { AuthService, UserModel } from '../../modules/auth';
 import { ApiService } from '@core/services/api.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-payouts',
@@ -36,7 +36,14 @@ export class PayoutsComponent implements OnInit {
       ])]
     });
 
-    this.paymentInfo$ = this.auth.paymentGet().pipe(map((res: any) => res.data[0]));
+    this.paymentInfo$ = this.auth.paymentGet().pipe(
+      map((res: any) => res.data[0]),
+      tap(res => {
+        this.form.patchValue({
+          type: res.type || 'paypal'
+        });
+      })
+    );
   }
 
   ngOnInit(): void {

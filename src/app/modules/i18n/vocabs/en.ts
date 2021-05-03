@@ -18,6 +18,7 @@ export const locale = {
       open: 'Open',
       shared: 'Shared',
       closed: 'Closed',
+      done: 'Done',
     },
     BUTTON: {
       submit: 'Submit',

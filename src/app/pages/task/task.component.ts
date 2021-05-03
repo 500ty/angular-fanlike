@@ -1,10 +1,13 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ApiService } from '@core/services/api.service';
-import { Observable } from 'rxjs';
+import { merge, Observable, of } from 'rxjs';
 import { TaskService } from '@pages/task/task.service';
 import { AuthService, UserModel } from '../../modules/auth';
 import { PaginatorState } from '../../_metronic/shared/crud-table';
 import { Constants } from '@core/configs/constants';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-task',
@@ -12,62 +15,96 @@ import { Constants } from '@core/configs/constants';
   styleUrls: ['./task.component.scss']
 })
 export class TaskComponent implements OnInit, AfterViewInit {
-  type: 'share_link' | 'share_post' | 'join_group' | 'share_page' | 'like_post' | 'like_page' | 'welcome' | 'invite' = 'share_link';
+  type: 'share_link' | 'share_post' | 'join_group' | 'share_page' | 'like_post' | 'like_page' | 'welcome' | 'invite' | 'interaction_post' = 'interaction_post';
   currentPage = 1;
   pageSize = Constants.table.rows;
   typeData = [
+    // {
+    //   name: 'share_link'
+    // },
     {
-      name: 'share_link'
+      name: 'interaction_post'
     },
     {
       name: 'join_group'
     },
     {
       name: 'like_page'
-    },
-    {
-      name: 'interaction_post'
     }
   ];
   data: any;
-  data$: Observable<any[]>;
   user$: Observable<UserModel>;
 
   // layout
   isLoading: boolean;
   paginator: PaginatorState;
-  pagination$: Observable<PaginatorState>;
+
+
+  // Mat table
+  displayedColumns: string[] = ['name', 'receive', 'remain', 'status', 'created_at', 'actionsCol'];
+  task$: Observable<any[]>;
+
+  resultsLength = 0;
+  isLoadingResults = true;
+  isRateLimitReached = false;
+
+  @ViewChild(MatPaginator) matPaginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(private apiService: ApiService,
               private taskService: TaskService,
               private auth: AuthService) {
-    this.data$ = this.taskService.data$;
-    this.pagination$ = this.taskService.pagination$;
     this.user$ = this.auth.currentUserSubject.asObservable();
   }
 
   ngOnInit(): void {
-    this.taskService.fetch(this.type, this.currentPage, this.pageSize).subscribe();
   }
 
   ngAfterViewInit() {
+    this.getData();
+  }
 
+  resetPaging(): void {
+    this.matPaginator.pageIndex = 0;
+  }
+
+  getData(){
+    this.task$ = merge(this.sort.sortChange, this.matPaginator.page)
+      .pipe(
+        startWith({}),
+        switchMap(() => {
+          this.isLoadingResults = true;
+          return this.taskService.fetch(
+            this.type,
+            this.sort.active,
+            this.sort.direction,
+            this.matPaginator.pageIndex,
+            this.pageSize
+          );
+        }),
+        map((data: any) => {
+          // Flip flag to show that loading has finished.
+          this.isLoadingResults = false;
+          this.isRateLimitReached = false;
+          this.resultsLength = data.meta.pagination.total;
+
+          return data.data;
+        }),
+        catchError(() => {
+          this.isLoadingResults = false;
+          // Catch if the GitHub API has reached its rate limit. Return empty data.
+          this.isRateLimitReached = true;
+          return of([]);
+        })
+      );
   }
 
 
   async onSelectType(type: any) {
     if (this.type !== type) {
       this.type = type;
-      this.currentPage = 1;
-      await this.getData();
-    }
-  }
-
-  async getData() {
-    try {
-      await this.taskService.fetch(this.type, this.currentPage, this.pageSize).toPromise();
-    } catch (e) {
-
+      this.resetPaging();
+      this.getData();
     }
   }
 
@@ -83,13 +120,5 @@ export class TaskComponent implements OnInit, AfterViewInit {
     } catch (e) {
       console.log(e);
     }
-  }
-
-  // pagination
-  async paginate(paginator: PaginatorState) {
-    console.log(paginator);
-    this.currentPage = paginator.page;
-    this.pageSize = paginator.pageSize;
-    await this.getData();
   }
 }

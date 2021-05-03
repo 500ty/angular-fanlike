@@ -1,87 +1,106 @@
 <ng-container *ngIf="user$ | async as user">
-  <div class="card card-custom mb-5">
-    <div class="card-body" *ngIf="paymentInfo$ | async as paymentInfo">
-      <ng-container *ngIf="paymentInfo;else templateNoPaymentInfo">
-        <div class="row">
-        <div class="col-sm-6 offset-sm-3">
-          <div
-                  class="rounded d-flex align-items-center justify-content-between text-white position-relative ml-auto px-7 py-5 bgi-no-repeat bgi-size-cover bgi-position-center"
-                  style="background-image: url('/assets/media/svg/shapes/abstract-9.svg');">
-            <div class="font-weight-boldest font-size-h5 text-uppercase">{{ 'TITLE.total_amount' | translate }}</div>
-            <div class="text-right d-flex flex-column">
-              <div class="d-flex align-items-center">
-                <span class="font-weight-boldest font-size-h3 line-height-sm mr-2">{{ user.balance }}</span>
-                <img width="18" src="./assets/media/svg/customs/coin.svg" alt="">
-              </div>
-              <!--        <span class="font-size-sm">Taxes included</span>-->
-            </div>
-          </div>
-          <form class="mt-5" [formGroup]="form" novalidate (ngSubmit)="onSubmit()"
-                [ngClass]="{'ng-was-validated-invalid': submitted}">
+    <ng-container *ngIf="paymentInfo$ | async as paymentInfo;else templateLoadingPayment">
+        <div *ngIf="paymentInfo;else templateNoPaymentInfo" class="card card-custom mb-5">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-6 offset-sm-3">
+                        <div
+                                class="rounded d-flex align-items-center justify-content-between text-white position-relative ml-auto px-7 py-5 bgi-no-repeat bgi-size-cover bgi-position-center"
+                                style="background-image: url('/assets/media/svg/shapes/abstract-9.svg');">
+                            <div class="font-weight-boldest font-size-h5 text-uppercase">{{ 'TITLE.total_amount' | translate }}</div>
+                            <div class="text-right d-flex flex-column">
+                                <div class="d-flex align-items-center">
+                                    <span class="font-weight-boldest font-size-h3 line-height-sm mr-2">{{ user.balance }}</span>
+                                    <img width="18" src="./assets/media/svg/customs/coin.svg" alt="">
+                                </div>
+                                <!--        <span class="font-size-sm">Taxes included</span>-->
+                            </div>
+                        </div>
+                        <form class="mt-5" [formGroup]="form" novalidate (ngSubmit)="onSubmit()"
+                              [ngClass]="{'ng-was-validated-invalid': submitted}">
 
-            <div class="form-group">
-              <mat-radio-group formControlName="type">
-                <mat-radio-button [disabled]="!paymentInfo.paypal_email" class="d-block mt-2 mr-0" value="paypal">
-                    Paypal (<a [routerLink]="['/user-profile/payment-information']" href="#">{{ 'BUTTON.edit' | translate }}</a>)
-                </mat-radio-button>
-                <mat-radio-button [disabled]="!paymentInfo.bank_account_name" class="d-block mt-2 mr-0" value="bank">
-                  Bank Wire Transfer (<a [routerLink]="['/user-profile/payment-information']" href="#">{{ 'BUTTON.edit' | translate }}</a>)
-                </mat-radio-button>
-                <mat-radio-button [disabled]="!paymentInfo.payoneer_email" class="d-block mt-2 mr-0" value="payoneer">
-                    Payoneer (<a [routerLink]="['/user-profile/payment-information']" href="#">{{ 'BUTTON.edit' | translate }}</a>)
-                </mat-radio-button>
-              </mat-radio-group>
-            </div>
+                            <div class="form-group">
+                                <mat-radio-group formControlName="type">
+                                    <mat-radio-button [disabled]="!paymentInfo.paypal_email" class="d-block mt-2 mr-0"
+                                                      value="paypal">
+                                        Paypal ({{ paymentInfo.paypal_email }} - <a
+                                            [routerLink]="['/user-profile/payment-information']"
+                                            href="#">{{ 'BUTTON.edit' | translate }}</a>)
+                                    </mat-radio-button>
+                                    <mat-radio-button [disabled]="!paymentInfo.bank_account_name"
+                                                      class="d-block mt-2 mr-0" value="bank">
+                                        Bank Wire Transfer ({{ paymentInfo.bank_name }} - <a
+                                            [routerLink]="['/user-profile/payment-information']"
+                                            href="#">{{ 'BUTTON.edit' | translate }}</a>)
+                                    </mat-radio-button>
+                                    <mat-radio-button [disabled]="!paymentInfo.payoneer_email" class="d-block mt-2 mr-0"
+                                                      value="payoneer">
+                                        Payoneer ({{ paymentInfo.payoneer_email }} - <a
+                                            [routerLink]="['/user-profile/payment-information']"
+                                            href="#">{{ 'BUTTON.edit' | translate }}</a>)
+                                    </mat-radio-button>
+                                </mat-radio-group>
+                            </div>
 
-            <div class="form-group text-center">
-              <button (click)="onRequest(user)" type="submit" class="btn btn-primary px-20">{{ 'BUTTON.submit' | translate }}</button>
+                            <div class="form-group text-center">
+                                <button (click)="onRequest(user)" type="submit"
+                                        class="btn btn-primary px-20">{{ 'BUTTON.submit' | translate }}</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-          </form>
         </div>
-      </div>
-      </ng-container>
-    </div>
-    <ng-template #templateNoPaymentInfo>
-      <ngb-alert [dismissible]="false">
-        <div class="text-center h4">
-          <p>You need to link a payment method to your account.</p>
-          <p>You can add a payment methods in <a [routerLink]="['/user-profile/payment-information']" href="#">Payment Settings</a></p>
-        </div>
-      </ngb-alert>
+        <ng-template #templateNoPaymentInfo>
+            <ngb-alert [dismissible]="false">
+                <div class="text-center h4">
+                    <p>You need to link a payment method to your account.</p>
+                    <p>You can add a payment methods in <a [routerLink]="['/user-profile/payment-information']"
+                                                           href="#">Payment Settings</a></p>
+                </div>
+            </ngb-alert>
+        </ng-template>
+    </ng-container>
+
+
+    <ng-template #templateLoadingPayment>
+        <div class="spinner"></div>
     </ng-template>
-  </div>
-  <div class="card card-custom mb-5">
-    <div class="card-body">
-      <!-- begin:Table -->
-      <div *ngIf="data$ | async as transactions" class="table-responsive angular-bootstrap-table">
-        <table
-                class="table table-head-custom table-vertical-center overflow-hidden"
-        >
-          <thead>
-          <th class="text-center">
-            Request date
-          </th>
-          <th class="text-center" [style.width.px]="160">
-            Payment method
-          </th>
-          <th class="text-center" [style.width.px]="160">
-            Amount
-          </th>
-          <th class="text-center" [style.width.px]="120">
-            Status
-          </th>
-          <th class="text-center" [style.width.px]="120">
-            Payout date
-          </th>
-          </thead>
-          <tbody>
-          <tr *ngFor="let item of transactions.data">
-            <td class="text-center">{{ item.date_request | date: 'dd/MM/yyyy' }}</td>
-            <td class="text-center">
-              <span class="text-uppercase">{{ item.payment_type }}</span>
-            </td>
-            <td class="text-center">{{ item.request_sum }}</td>
-            <td class="text-center">
+
+    <ng-container *ngIf="data$ | async as transactions;else templateLoadingTransactions">
+        <div class="card card-custom mb-5">
+            <div class="card-body">
+                <!-- begin:Table -->
+                <div class="table-responsive angular-bootstrap-table">
+                    <table
+                            class="table table-head-custom table-vertical-center overflow-hidden"
+                    >
+                        <thead>
+                        <th class="text-center">
+                            Request date
+                        </th>
+                        <th class="text-center" [style.width.px]="160">
+                            Payment method
+                        </th>
+                        <th class="text-center" [style.width.px]="160">
+                            Amount
+                        </th>
+                        <th class="text-center" [style.width.px]="120">
+                            Status
+                        </th>
+                        <th class="text-center" [style.width.px]="120">
+                            Payout date
+                        </th>
+                        </thead>
+                        <tbody>
+                        <ng-container *ngIf="transactions.data.length;else transactionsNoData">
+                            <tr *ngFor="let item of transactions.data">
+                                <td class="text-center">{{ item.date_request | date: 'dd/MM/yyyy' }}</td>
+                                <td class="text-center">
+                                    <span class="text-uppercase">{{ item.payment_type }}</span>
+                                </td>
+                                <td class="text-center">{{ item.request_sum }}</td>
+                                <td class="text-center">
               <span
                       class="label label-lg label-inline"
                       [class.label-light-primary]="item.status === 'pending'"
@@ -92,14 +111,26 @@
               <ng-container *ngIf="item.status === 'paid'">Shared</ng-container>
               <ng-container *ngIf="item.status === 'declined'">Closed</ng-container>
             </span>
-            </td>
-            <td class="text-center">{{ item.date_payout ? (item.date_payout | date: 'dd/MM/yyyy') : '-' }}</td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-      <!-- end: Table -->
-    </div>
-  </div>
+                                </td>
+                                <td class="text-center">{{ item.date_payout ? (item.date_payout | date: 'dd/MM/yyyy') : '-' }}</td>
+                            </tr>
+                        </ng-container>
+                        <ng-template #transactionsNoData>
+                            <tr>
+                                <td colspan="5" class="text-center">
+                                    No data
+                                </td>
+                            </tr>
+                        </ng-template>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- end: Table -->
+            </div>
+        </div>
+    </ng-container>
 
+    <ng-template #templateLoadingTransactions>
+        <div class="spinner"></div>
+    </ng-template>
 </ng-container>

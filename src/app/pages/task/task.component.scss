@@ -1,0 +1,107 @@
+@import "~src/assets/sass/init";
+
+.custom-table-wrap {
+  position: relative;
+
+  mat-cell:first-of-type, mat-header-cell:first-of-type, mat-footer-cell:first-of-type {
+    padding-left: 0.75rem;
+  }
+
+  .mat-header-cell {
+    font-weight: 600;
+    color: #B5B5C3 !important;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+  }
+
+
+  .custom-table {
+    font-family: $font-family-base;
+    font-size: $root-font-size;
+
+    .mat-cell, .mat-footer-cell {
+      font-size: $root-font-size;
+    }
+  }
+
+  .custom-table-loading-shade {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 56px;
+    right: 0;
+    background: rgba(0, 0, 0, 0.15);
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mb-mat-header-cell {
+    display: none;
+  }
+
+  .mat-cell {
+    padding: 0.75rem;
+  }
+
+  @include media-breakpoint-down(lg) {
+    .mat-header-row {
+      display: none;
+    }
+    .mat-table {
+      border: 0;
+      vertical-align: middle;
+      background-color: transparent;
+    }
+    mat-row::after, mat-header-row::after, mat-footer-row::after {
+      display: none;
+    }
+    .mb-mat-header-cell {
+      display: block;
+      margin-right: auto;
+      width: 120px;
+    }
+    .mat-row {
+      flex-direction: column;
+      margin-bottom: 10px;
+      border-bottom: 5px solid #ddd;
+    }
+    .mat-cell {
+      display: flex;
+      width: 100%;
+
+      &:not(:last-child) {
+        border-bottom: 1px solid #ddd;
+      }
+    }
+  }
+}
+
+.custom-table-wrap-task {
+  @include media-breakpoint-up(xl) {
+    .mat-column-receive {
+      flex: 0 0 100px;
+      justify-content: center;
+    }
+    .mat-column-remain {
+      flex: 0 0 100px;
+      justify-content: center;
+    }
+    .mat-column-status {
+      flex: 0 0 120px;
+      justify-content: center;
+    }
+    .mat-column-created_at {
+      flex: 0 0 120px;
+      justify-content: center;
+    }
+    .mat-column-actionsCol {
+      flex: 0 0 160px;
+      justify-content: center;
+    }
+  }
+}
+
+

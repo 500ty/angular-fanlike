@@ -18,6 +18,7 @@ export const locale = {
       open: 'Mở',
       shared: 'Đã chia sẻ',
       closed: 'Đã đóng',
+      done: 'Đã thực hiện',
     },
     BUTTON: {
       submit: 'Gửi',

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { ApiService } from '@core/services/api.service';
 import { tap } from 'rxjs/operators';
 import { PaginatorState } from '../../_metronic/shared/crud-table';
@@ -17,20 +17,29 @@ export class TaskService {
   constructor(private api: ApiService) {
   }
 
-  fetch(type: any, page: number = 1, pageSize: number = 50) {
+  getData(sort: string = 'created_at ', order: string = 'desc', page: number = 0, pageSize: number = 10): Observable<any> {
+    console.log(sort, order, page);
+    // const href = 'https://api.github.com/search/issues';
+    // const requestUrl = `${href}?q=repo:angular/components&sort=${sort}&order=${order}&page=${page + 1}`;
+
+    const requestUrl = `/articles?page=${page + 1}&per_page=${pageSize}&filters[${sort}][sorting]=${order}`;
+    return this.api.get<any>(requestUrl);
+  }
+
+  fetch(type: any, sort: string = 'created_at ', order: string = 'desc', page: number = 0, pageSize: number = 30) {
     let url;
     switch (type) {
       case 'share_link':
-        url = `/articles?page=${page}&per_page=${pageSize}`;
+        url = `/articles?page=${page + 1}&per_page=${pageSize}&filters[${sort}][sorting]=${order}`;
         break;
       case 'join_group':
-        url = `/fbgroups?page=${page}`;
+        url = `/fbgroups?page=${page + 1}&per_page=${pageSize}&filters[${sort}][sorting]=${order}`;
         break;
       case 'like_page':
-        url = `/fbpages?page=${page}`;
+        url = `/fbpages?page=${page + 1}&per_page=${pageSize}&filters[${sort}][sorting]=${order}`;
         break;
       case 'interaction_post':
-        url = `/fbposts?page=${page}`;
+        url = `/fbposts?page=${page + 1}&per_page=${pageSize}&filters[${sort}][sorting]=${order}`;
         break;
     }
     return this.api.get(url).pipe(

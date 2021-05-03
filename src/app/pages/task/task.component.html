@@ -1,5 +1,5 @@
-<div class="d-flex flex-row">
-  <div class="flex-row-auto offcanvas-mobile w-200px w-xxl-275px">
+<div class="d-xl-flex flex-row">
+  <div class="flex-row-auto w-xxl-275px mb-5">
     <div class="card card-custom card-stretch">
       <div class="card-body px-5">
         <div class="navi-section mb-2 font-size-h6 font-weight-bold pb-0 d-flex">
@@ -20,83 +20,109 @@
       </div>
     </div>
   </div>
-  <div class="flex-row-fluid ml-lg-8" *ngIf="user$ | async as user">
+  <div class="flex-row-fluid ml-xl-8" *ngIf="user$ | async as user">
     <div class="card card-custom gutter-b mb-0">
       <div class="card-header">
         <div class="card-title">
           <h3 class="card-label">{{ 'TITLE.tasks_list' | translate }}</h3>
         </div>
       </div>
-      <div class="card-body">
+      <div class="card-body p-0">
         <!-- begin:Table -->
-        <div class="table-responsive angular-bootstrap-table">
-          <table
-                  class="table table-head-custom table-vertical-center overflow-hidden"
-          >
-            <thead>
-            <th>
-              {{ 'TABLE.title' | translate }}
-            </th>
-            <th class="text-center" [style.width.px]="100">
-              {{ 'TABLE.receive' | translate }}
-            </th>
-            <th class="text-center" [style.width.px]="100">
-              {{ 'TABLE.remaining' | translate }}
-            </th>
-            <th class="text-center" [style.width.px]="100">
-              {{ 'TABLE.status' | translate }}
-            </th>
-            <th [style.width.px]="100">
-              {{ 'TABLE.date' | translate }}
-            </th>
-            <th [style.width.px]="160">
-              {{ 'TABLE.actions' | translate }}
-            </th>
-            </thead>
-            <tbody>
-            <tr *ngFor="let task of this.data$ | async">
-              <td>
-                <a href="{{ task.link }}" target="_blank">
-                  {{ task.name }}
-                </a>
-              </td>
-              <td class="text-center">{{ task.receive || 0 }}</td>
-              <td class="text-center">{{ task.remain }}/{{ task.budget || 0 }}</td>
-              <td class="text-center">
-                        <span
-                                class="label label-lg label-inline"
-                                [class.label-light-primary]="task.status === 0"
-                                [class.label-light-success]="task.status === 1"
-                                [class.label-mute]="task.status === 2"
-                        >
-                        <ng-container *ngIf="task.status == 0">{{ 'STATUS.open' | translate }}</ng-container>
-                        <ng-container *ngIf="task.status == 1">{{ 'STATUS.shared' | translate }}</ng-container>
-                        <ng-container *ngIf="task.status == 2">{{ 'STATUS.closed' | translate }}</ng-container>
-                      </span>
-              </td>
-              <td>{{ task.created_at | date: 'dd/MM/yyyy' }}</td>
-              <td>
-                <a *ngIf="task.action_type === 'share_post';else templateButtonAction"
-                   shareButton="facebook" [url]="task.link + '?utm_source=FanLike&utm_medium=' + user.hash_id"
-                   class="btn btn-primary"
-                   (click)="saveAction(task)">{{ 'RESPONSE.' + task.action_type | translate }}</a>
-                <ng-template #templateButtonAction>
-                  <a [href]="task.link + '?utm_source=FanLike&utm_medium=' + user.hash_id"
-                     target="_blank"
-                     class="btn btn-primary" (click)="saveAction(task)">
-                    {{ 'RESPONSE.' + task.action_type | translate }}
+        <div class="custom-table-wrap custom-table-wrap-task">
+          <div class="custom-table-loading-shade"
+               *ngIf="isLoadingResults || isRateLimitReached">
+            <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+          </div>
+
+          <div class="custom-table-container">
+            <mat-table [dataSource]="task$" class="custom-table" matSort
+                       matSortActive="created_at" matSortDisableClear matSortDirection="desc"
+                       (matSortChange)="resetPaging()">
+
+              <!-- ID Column -->
+              <ng-container matColumnDef="name">
+                <mat-header-cell *matHeaderCellDef> {{ 'TABLE.title' | translate }} </mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                  <span class="mb-mat-header-cell">{{ 'TABLE.title' | translate }}</span>
+                  <a href="{{ row.link }}" target="_blank">
+                    {{ row.name }}
                   </a>
-                </ng-template>
-              </td>
-            </tr>
-            </tbody>
-          </table>
+                </mat-cell>
+              </ng-container>
+
+              <!-- Progress Column -->
+              <ng-container matColumnDef="receive">
+                <mat-header-cell *matHeaderCellDef> {{ 'TABLE.receive' | translate }} </mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                  <span class="mb-mat-header-cell">{{ 'TABLE.receive' | translate }}</span>
+                  {{ row.receive }}
+                </mat-cell>
+              </ng-container>
+
+              <!-- Name Column -->
+              <ng-container matColumnDef="remain">
+                <mat-header-cell *matHeaderCellDef>{{ 'TABLE.remaining' | translate }}</mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                  <span class="mb-mat-header-cell">{{ 'TABLE.remaining' | translate }}</span>
+                  {{ row.remain }}/{{ row.budget || 0 }}
+                </mat-cell>
+              </ng-container>
+
+              <!-- Color Column -->
+              <ng-container matColumnDef="status">
+                <mat-header-cell *matHeaderCellDef> {{ 'TABLE.status' | translate }} </mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                  <span class="mb-mat-header-cell">{{ 'TABLE.status' | translate }}</span>
+                  <span class="label label-lg label-inline"
+                        [class.label-light-primary]="row.status === 0"
+                        [class.label-light-success]="row.status === 1"
+                        [class.label-mute]="row.status === 2">
+                    <ng-container *ngIf="row.status == 0">{{ 'STATUS.open' | translate }}</ng-container>
+                    <ng-container *ngIf="row.status == 1">{{ 'STATUS.done' | translate }}</ng-container>
+                    <ng-container *ngIf="row.status == 2">{{ 'STATUS.closed' | translate }}</ng-container>
+                  </span>
+                </mat-cell>
+              </ng-container>
+
+              <!-- created_at Column -->
+              <ng-container matColumnDef="created_at">
+                <mat-header-cell *matHeaderCellDef mat-sort-header disableClear>{{ 'TABLE.date' | translate }}</mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                  <span class="mb-mat-header-cell">{{ 'TABLE.date' | translate }}</span>
+                  {{row.created_at | date: 'dd/MM/yyyy'}}
+                </mat-cell>
+              </ng-container>
+
+              <!-- Actions Column -->
+              <ng-container matColumnDef="actionsCol">
+                <mat-header-cell *matHeaderCellDef>{{ 'TABLE.actions' | translate }}</mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                  <span class="mb-mat-header-cell">{{ 'TABLE.actions' | translate }}</span>
+                  <a *ngIf="row.action_type === 'share_post';else templateButtonAction"
+                     shareButton="facebook" [url]="row.link + '?utm_source=FanLike&utm_medium=' + user.hash_id"
+                     class="btn btn-primary"
+                     (click)="saveAction(row)">{{ 'RESPONSE.' + row.action_type | translate }}</a>
+                  <ng-template #templateButtonAction>
+                    <a [href]="row.link + '?utm_source=FanLike&utm_medium=' + user.hash_id"
+                       target="_blank"
+                       class="btn btn-primary" (click)="saveAction(row)">
+                      {{ 'RESPONSE.' + row.action_type | translate }}
+                    </a>
+                  </ng-template>
+                </mat-cell>
+              </ng-container>
+
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns;">
+              </mat-row>
+            </mat-table>
+
+
+          </div>
+
+          <mat-paginator [length]="resultsLength" [pageSize]="pageSize"></mat-paginator>
         </div>
-        <!-- end: Table -->
-        <app-paginator *ngIf="pagination$ | async as pagination"
-                       class="d-flex justify-content-between align-items-center flex-wrap"
-                       [paginator]="pagination"
-                       [isLoading]="isLoading" (paginate)="paginate($event)"></app-paginator>
       </div>
     </div>
   </div>
