@@ -6,6 +6,7 @@ export class UserModel extends AuthModel {
   id: number;
   hash_id: string;
   fb_id: string;
+  fb_access_token: string;
   username: string;
   password: string;
   name: string;

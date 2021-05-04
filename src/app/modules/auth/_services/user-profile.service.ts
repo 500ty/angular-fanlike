@@ -14,6 +14,17 @@ export class UserProfileService {
               private http: HttpClient) {
   }
 
+  updateFBAccessToken(token: string) {
+    return this.http.post(this.apiUrl + '/users/fbtoken', {token}, {
+      headers: this.getHeaderConfig()
+    }).pipe(
+      tap((res) => {
+        console.log('UserProfileService-updateProfile', res);
+        this.authService.getUserByToken();
+      })
+    );
+  }
+
   updateProfile(body: any) {
     return this.http.post(this.apiUrl + '/users/profile', body, {
       headers: this.getHeaderConfig()

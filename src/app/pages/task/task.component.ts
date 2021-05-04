@@ -8,6 +8,9 @@ import { Constants } from '@core/configs/constants';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { UserProfileService } from '../../modules/auth/_services/user-profile.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-task',
@@ -48,12 +51,17 @@ export class TaskComponent implements OnInit, AfterViewInit {
   isLoadingResults = true;
   isRateLimitReached = false;
 
+  userTemp: UserModel;
+
   @ViewChild(MatPaginator) matPaginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private apiService: ApiService,
               private taskService: TaskService,
-              private auth: AuthService) {
+              private auth: AuthService,
+              private modalService: NgbModal,
+              private userProfileService: UserProfileService,
+              public snackBar: MatSnackBar) {
     this.user$ = this.auth.currentUserSubject.asObservable();
   }
 
@@ -68,7 +76,7 @@ export class TaskComponent implements OnInit, AfterViewInit {
     this.matPaginator.pageIndex = 0;
   }
 
-  getData(){
+  getData() {
     this.task$ = merge(this.sort.sortChange, this.matPaginator.page)
       .pipe(
         startWith({}),
@@ -120,5 +128,34 @@ export class TaskComponent implements OnInit, AfterViewInit {
     } catch (e) {
       console.log(e);
     }
+  }
+
+  onOpenModalToken(content: any, user: UserModel) {
+    this.modalService.open(content, {});
+    this.userTemp = user;
+  }
+
+  async onSaveToken(token: string) {
+    try {
+      const res: any = await this.userProfileService.updateFBAccessToken(token).toPromise();
+      console.log(res);
+      if (res.meta.messages) {
+        this.snackBar.open(res.meta.messages, 'Success', {
+          duration: 2000,
+        });
+        const user: any = {
+          ...this.userTemp,
+          fb_access_token: token
+        };
+        this.auth.currentUserSubject.next(user);
+      }
+    } catch (error) {
+      console.log(error);
+      this.snackBar.open(error.error.meta.messages, 'Error', {
+        duration: 2000,
+        panelClass: ['bg-danger']
+      });
+    }
+    this.modalService.dismissAll();
   }
 }

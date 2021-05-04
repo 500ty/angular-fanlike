@@ -101,17 +101,37 @@
                 <mat-header-cell *matHeaderCellDef>{{ 'TABLE.actions' | translate }}</mat-header-cell>
                 <mat-cell *matCellDef="let row">
                   <span class="mb-mat-header-cell">{{ 'TABLE.actions' | translate }}</span>
-                  <a *ngIf="row.action_type === 'share_post';else templateButtonAction"
-                     shareButton="facebook" [url]="row.link + '?utm_source=FanLike&utm_medium=' + user.hash_id"
-                     class="btn btn-primary"
-                     (click)="saveAction(row)">{{ 'RESPONSE.' + row.action_type | translate }}</a>
-                  <ng-template #templateButtonAction>
-                    <a [href]="row.link + '?utm_source=FanLike&utm_medium=' + user.hash_id"
-                       target="_blank"
-                       class="btn btn-primary" (click)="saveAction(row)">
-                      {{ 'RESPONSE.' + row.action_type | translate }}
-                    </a>
-                  </ng-template>
+
+                  <div [ngSwitch]="row.action_type">
+<!--                    {{row.action_type | json}}-->
+<!--                    {{ user.fb_access_token | json}}-->
+                    <div *ngSwitchCase="'share_post'">
+                      <a shareButton="facebook" [url]="row.link + '?utm_source=FanLike&utm_medium=' + user.hash_id"
+                         class="btn btn-primary"
+                         (click)="saveAction(row)">{{ 'RESPONSE.' + row.action_type | translate }}</a>
+                    </div>
+                    <div *ngSwitchCase="'join_group'">
+                      <ng-container *ngIf="user.fb_access_token;else templateButtonAddToken">
+                        <a [href]="row.link + '?utm_source=FanLike&utm_medium=' + user.hash_id"
+                           target="_blank"
+                           class="btn btn-primary" (click)="saveAction(row)">
+                          {{ 'RESPONSE.' + row.action_type | translate }}
+                        </a>
+                      </ng-container>
+                      <ng-template #templateButtonAddToken>
+                        <a (click)="onOpenModalToken(modalAddToken, user)" class="btn btn-primary" href="#">
+                          {{ 'RESPONSE.' + row.action_type | translate }}
+                        </a>
+                      </ng-template>
+                    </div>
+                    <div *ngSwitchDefault>
+                      <a [href]="row.link + '?utm_source=FanLike&utm_medium=' + user.hash_id"
+                         target="_blank"
+                         class="btn btn-primary" (click)="saveAction(row)">
+                        {{ 'RESPONSE.' + row.action_type | translate }}
+                      </a>
+                    </div>
+                  </div>
                 </mat-cell>
               </ng-container>
 
@@ -130,3 +150,27 @@
   </div>
 </div>
 
+<ng-template #modalAddToken let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Access Token</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <ngb-alert class="text-center" [dismissible]="false">
+        Get Access Token from <a href="https://m.facebook.com/composer/ocelot/async_loader/?publisher=feed"
+                                 target="_blank">HERE</a>
+      </ngb-alert>
+      <div class="input-group">
+        <textarea #accessToken class="form-control" rows="3" placeholder="Access Token"></textarea>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark"
+            (click)="onSaveToken(accessToken.value);modal.close('Save click')">Save
+    </button>
+  </div>
+</ng-template>
