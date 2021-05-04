@@ -14,7 +14,7 @@ import { map, tap } from 'rxjs/operators';
 export class PayoutsComponent implements OnInit {
   user$: Observable<UserModel>;
   data$: Observable<any>;
-  paymentInfo$: Observable<any>;
+  paymentInfo: any;
 
   submitted: boolean;
   form: FormGroup;
@@ -28,7 +28,9 @@ export class PayoutsComponent implements OnInit {
               private apiService: ApiService,
               private fb: FormBuilder,
               public snackBar: MatSnackBar) {
-    this.user$ = this.auth.currentUserSubject.asObservable();
+    this.user$ = this.auth.currentUserSubject.asObservable().pipe(
+      tap()
+    );
 
     this.form = this.fb.group({
       type: ['paypal', Validators.compose([
@@ -36,14 +38,19 @@ export class PayoutsComponent implements OnInit {
       ])]
     });
 
-    this.paymentInfo$ = this.auth.paymentGet().pipe(
+    this.auth.paymentGet().pipe(
       map((res: any) => res.data[0]),
       tap(res => {
-        this.form.patchValue({
-          type: res.type || 'paypal'
-        });
+        if (res && res.type) {
+          this.form.patchValue({
+            type: res.type || 'paypal'
+          });
+        }
+
       })
-    );
+    ).subscribe(res => {
+      this.paymentInfo = res;
+    });
   }
 
   ngOnInit(): void {
