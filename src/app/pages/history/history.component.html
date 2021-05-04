@@ -16,7 +16,7 @@
         <th [style.width.px]="160">
           Verify at
         </th>
-        <th [style.width.px]="100">
+        <th class="text-center" [style.width.px]="100">
           Received
         </th>
         <th [style.width.px]="100">
@@ -33,7 +33,11 @@
           </td>
           <td>{{ item.created_at | date: 'dd/MM/yyyy hh:mm:ss' }}</td>
           <td>{{ item.updated_at | date: 'dd/MM/yyyy hh:mm:ss' }}</td>
-          <td>{{ item.receive }}</td>
+          <td class="text-center">
+            <span>
+              {{ item.receive }} <img width="18" src="./assets/media/svg/customs/coin.svg" alt="">
+            </span>
+          </td>
           <td>{{ item.ip }}</td>
           <td>
             <span

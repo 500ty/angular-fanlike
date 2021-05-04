@@ -40,7 +40,7 @@
                        matSortActive="created_at" matSortDisableClear matSortDirection="desc"
                        (matSortChange)="resetPaging()">
 
-              <!-- ID Column -->
+              <!-- title Column -->
               <ng-container matColumnDef="name">
                 <mat-header-cell *matHeaderCellDef> {{ 'TABLE.title' | translate }} </mat-header-cell>
                 <mat-cell *matCellDef="let row">
@@ -51,16 +51,18 @@
                 </mat-cell>
               </ng-container>
 
-              <!-- Progress Column -->
+              <!-- receive Column -->
               <ng-container matColumnDef="receive">
                 <mat-header-cell *matHeaderCellDef> {{ 'TABLE.receive' | translate }} </mat-header-cell>
                 <mat-cell *matCellDef="let row">
                   <span class="mb-mat-header-cell">{{ 'TABLE.receive' | translate }}</span>
-                  {{ row.receive }}
+                  <span>
+                    {{ row.receive }} <img width="18" src="./assets/media/svg/customs/coin.svg" alt="">
+                  </span>
                 </mat-cell>
               </ng-container>
 
-              <!-- Name Column -->
+              <!-- remaining Column -->
               <ng-container matColumnDef="remain">
                 <mat-header-cell *matHeaderCellDef>{{ 'TABLE.remaining' | translate }}</mat-header-cell>
                 <mat-cell *matCellDef="let row">
@@ -69,7 +71,7 @@
                 </mat-cell>
               </ng-container>
 
-              <!-- Color Column -->
+              <!-- status Column -->
               <ng-container matColumnDef="status">
                 <mat-header-cell *matHeaderCellDef> {{ 'TABLE.status' | translate }} </mat-header-cell>
                 <mat-cell *matCellDef="let row">
@@ -85,7 +87,7 @@
                 </mat-cell>
               </ng-container>
 
-              <!-- created_at Column -->
+              <!-- date Column -->
               <ng-container matColumnDef="created_at">
                 <mat-header-cell *matHeaderCellDef mat-sort-header disableClear>{{ 'TABLE.date' | translate }}</mat-header-cell>
                 <mat-cell *matCellDef="let row">
@@ -94,7 +96,7 @@
                 </mat-cell>
               </ng-container>
 
-              <!-- Actions Column -->
+              <!-- actions Column -->
               <ng-container matColumnDef="actionsCol">
                 <mat-header-cell *matHeaderCellDef>{{ 'TABLE.actions' | translate }}</mat-header-cell>
                 <mat-cell *matCellDef="let row">
