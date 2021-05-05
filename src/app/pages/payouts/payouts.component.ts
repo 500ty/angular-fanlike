@@ -14,7 +14,7 @@ import { map, tap } from 'rxjs/operators';
 export class PayoutsComponent implements OnInit {
   user$: Observable<UserModel>;
   data$: Observable<any>;
-  paymentInfo: any;
+  paymentInfo$: Observable<any>;
 
   submitted: boolean;
   form: FormGroup;
@@ -38,7 +38,7 @@ export class PayoutsComponent implements OnInit {
       ])]
     });
 
-    this.auth.paymentGet().pipe(
+    this.paymentInfo$ = this.auth.paymentGet().pipe(
       map((res: any) => res.data[0]),
       tap(res => {
         if (res && res.type) {
@@ -48,9 +48,7 @@ export class PayoutsComponent implements OnInit {
         }
 
       })
-    ).subscribe(res => {
-      this.paymentInfo = res;
-    });
+    );
   }
 
   ngOnInit(): void {

@@ -1,18 +1,19 @@
-<ng-container *ngIf="user$ | async as user">
-    <div *ngIf="paymentInfo;else templateNoPaymentInfo" class="card card-custom mb-5">
+<ng-container *ngIf="paymentInfo$ | async as paymentInfo">
+    <div class="card card-custom mb-5" *ngIf="paymentInfo.paypal_email || paymentInfo.bank_account_nam || paymentInfo.payoneer_email;else templateNoPaymentInfo">
         <div class="card-body">
-            <div class="row">
+            <div class="row" *ngIf="user$ | async as user">
                 <div class="col-sm-6 offset-sm-3">
-                    <div
-                            class="rounded d-flex align-items-center justify-content-between text-white position-relative ml-auto px-7 py-5 bgi-no-repeat bgi-size-cover bgi-position-center"
-                            style="background-image: url('/assets/media/svg/shapes/abstract-9.svg');">
+                    <div class="rounded d-flex align-items-center justify-content-between text-white position-relative ml-auto px-7 py-5 bgi-no-repeat bgi-size-cover bgi-position-center"
+                         style="background-image: url('/assets/media/svg/shapes/abstract-9.svg');">
                         <div class="font-weight-boldest font-size-h5 text-uppercase">{{ 'TITLE.total_amount' | translate }}</div>
                         <div class="text-right d-flex flex-column">
-                            <div class="d-flex align-items-center">
+                            <div class="d-flex align-items-center align-self-end">
                                 <span class="font-weight-boldest font-size-h3 line-height-sm mr-2">{{ user.balance }}</span>
                                 <img width="18" src="./assets/media/svg/customs/coin.svg" alt="">
                             </div>
-                            <!--        <span class="font-size-sm">Taxes included</span>-->
+                            <span class="font-size-sm mt-5">
+                                1<img width="12" src="./assets/media/svg/customs/coin.svg" alt=""> = 1đ
+                            </span>
                         </div>
                     </div>
                     <form class="mt-5" [formGroup]="form" novalidate (ngSubmit)="onSubmit()"
@@ -50,6 +51,7 @@
             </div>
         </div>
     </div>
+
     <ng-template #templateNoPaymentInfo>
         <ngb-alert [dismissible]="false">
             <div class="text-center h4">
@@ -59,41 +61,43 @@
             </div>
         </ngb-alert>
     </ng-template>
+</ng-container>
 
-    <ng-container *ngIf="data$ | async as transactions;else templateLoadingTransactions">
-        <div class="card card-custom mb-5">
-            <div class="card-body">
-                <!-- begin:Table -->
-                <div class="table-responsive angular-bootstrap-table">
-                    <table
-                            class="table table-head-custom table-vertical-center overflow-hidden"
-                    >
-                        <thead>
-                        <th class="text-center">
-                            Request date
-                        </th>
-                        <th class="text-center" [style.width.px]="160">
-                            Payment method
-                        </th>
-                        <th class="text-center" [style.width.px]="160">
-                            Amount
-                        </th>
-                        <th class="text-center" [style.width.px]="120">
-                            Status
-                        </th>
-                        <th class="text-center" [style.width.px]="120">
-                            Payout date
-                        </th>
-                        </thead>
-                        <tbody>
-                        <ng-container *ngIf="transactions.data.length;else transactionsNoData">
-                            <tr *ngFor="let item of transactions.data">
-                                <td class="text-center">{{ item.date_request | date: 'dd/MM/yyyy' }}</td>
-                                <td class="text-center">
-                                    <span class="text-uppercase">{{ item.payment_type }}</span>
-                                </td>
-                                <td class="text-center">{{ item.request_sum }}</td>
-                                <td class="text-center">
+
+<ng-container *ngIf="data$ | async as transactions;else templateLoadingTransactions">
+    <div class="card card-custom mb-5">
+        <div class="card-body">
+            <!-- begin:Table -->
+            <div class="table-responsive angular-bootstrap-table">
+                <table
+                        class="table table-head-custom table-vertical-center overflow-hidden"
+                >
+                    <thead>
+                    <th class="text-center">
+                        Request date
+                    </th>
+                    <th class="text-center" [style.width.px]="160">
+                        Payment method
+                    </th>
+                    <th class="text-center" [style.width.px]="160">
+                        Amount
+                    </th>
+                    <th class="text-center" [style.width.px]="120">
+                        Status
+                    </th>
+                    <th class="text-center" [style.width.px]="120">
+                        Payout date
+                    </th>
+                    </thead>
+                    <tbody>
+                    <ng-container *ngIf="transactions.data.length;else transactionsNoData">
+                        <tr *ngFor="let item of transactions.data">
+                            <td class="text-center">{{ item.date_request | date: 'dd/MM/yyyy' }}</td>
+                            <td class="text-center">
+                                <span class="text-uppercase">{{ item.payment_type }}</span>
+                            </td>
+                            <td class="text-center">{{ item.request_sum }}</td>
+                            <td class="text-center">
               <span
                       class="label label-lg label-inline"
                       [class.label-light-primary]="item.status === 'pending'"
@@ -104,26 +108,25 @@
               <ng-container *ngIf="item.status === 'paid'">Shared</ng-container>
               <ng-container *ngIf="item.status === 'declined'">Closed</ng-container>
             </span>
-                                </td>
-                                <td class="text-center">{{ item.date_payout ? (item.date_payout | date: 'dd/MM/yyyy') : '-' }}</td>
-                            </tr>
-                        </ng-container>
-                        <ng-template #transactionsNoData>
-                            <tr>
-                                <td colspan="5" class="text-center">
-                                    No data
-                                </td>
-                            </tr>
-                        </ng-template>
-                        </tbody>
-                    </table>
-                </div>
-                <!-- end: Table -->
+                            </td>
+                            <td class="text-center">{{ item.date_payout ? (item.date_payout | date: 'dd/MM/yyyy') : '-' }}</td>
+                        </tr>
+                    </ng-container>
+                    <ng-template #transactionsNoData>
+                        <tr>
+                            <td colspan="5" class="text-center">
+                                No data
+                            </td>
+                        </tr>
+                    </ng-template>
+                    </tbody>
+                </table>
             </div>
+            <!-- end: Table -->
         </div>
-    </ng-container>
-
-    <ng-template #templateLoadingTransactions>
-        <div class="spinner"></div>
-    </ng-template>
+    </div>
 </ng-container>
+
+<ng-template #templateLoadingTransactions>
+    <div class="spinner"></div>
+</ng-template>
